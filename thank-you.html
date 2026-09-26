@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Thank you — How Your Body Really Works</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#fbf9f5" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: #fbf9f5; --ink: #17140f; --ink-soft: #57503f;
+        --ink-faint: #8b8474; --rule: #e2dbcc; --signal: #e4f04a;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        background: var(--paper) url("paper.jpg") center / 420px repeat;
+        color: var(--ink); font-family: Archivo, system-ui, sans-serif;
+        font-size: 17.5px; line-height: 1.62; -webkit-font-smoothing: antialiased;
+        min-height: 100vh; display: flex; align-items: center; justify-content: center;
+        padding: 40px 22px;
+      }
+      .card { width: 100%; max-width: 560px; text-align: center; }
+      .mono {
+        font-family: "IBM Plex Mono", monospace; font-weight: 500;
+        letter-spacing: 0.14em; text-transform: uppercase; font-size: 11px;
+        color: var(--ink-faint);
+      }
+      h1 {
+        font-family: "Instrument Serif", Georgia, serif; font-weight: 400;
+        font-size: 42px; line-height: 1.06; letter-spacing: -0.015em;
+        margin: 14px 0 16px;
+      }
+      h1 i { font-style: italic; }
+      p { color: var(--ink-soft); margin-bottom: 16px; }
+      .shot { width: 100%; max-width: 260px; margin: 6px auto 26px; display: block; border-radius: 4px; }
+      .dl {
+        display: block; width: 100%; max-width: 380px; margin: 0 auto 12px;
+        background: var(--ink); color: var(--paper); text-decoration: none;
+        border-radius: 4px; padding: 18px 26px; font-size: 17px; font-weight: 600;
+        box-shadow: 0 6px 18px rgba(23,20,15,.18);
+      }
+      .alt {
+        display: inline-block; color: var(--ink); text-decoration: none;
+        border-bottom: 1.5px solid var(--signal); padding-bottom: 2px;
+        font-size: 15.5px; font-weight: 500;
+      }
+      .note {
+        border-top: 1px solid var(--rule); margin-top: 34px; padding-top: 22px;
+        color: var(--ink-faint); font-size: 14px; line-height: 1.6; text-align: left;
+      }
+      .note b { color: var(--ink-soft); }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <img class="shot" src="hero.jpg" alt="" />
+      <div class="mono">Payment received</div>
+      <h1>It is yours. <i>Enjoy it.</i></h1>
+      <p>
+        Both files are below, and a copy of this link is in your email receipt. Download them to
+        your own device — the link in the email will always bring you back here.
+      </p>
+
+      <!-- Point these at the two files once they exist. -->
+      <a class="dl" href="#pdf">Download the PDF</a>
+      <a class="alt" href="#epub">Or the EPUB, for e-readers</a>
+
+      <div class="note">
+        <p>
+          <b>Start at chapter one.</b> It is short, and the rest of the book assumes it. If you
+          only ever read one part, make it part three.
+        </p>
+        <p style="margin-bottom: 0">
+          Something not working, or the files will not open? Reply to your receipt and it gets
+          sorted. This book is educational and is not medical advice.
+        </p>
+      </div>
+    </div>
+    <!-- Cloudflare Web Analytics. No cookies, no personal data. -->
+    <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js'
+      data-cf-beacon='{"token": "e8763b874844456f8cd7d994379b9cc0"}'></script>
+    <!-- End Cloudflare Web Analytics -->
+  </body>
+</html>
