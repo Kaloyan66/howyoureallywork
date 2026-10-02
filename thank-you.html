@@ -54,6 +54,13 @@
         border-bottom: 1.5px solid var(--signal); padding-bottom: 2px;
         font-size: 15.5px; font-weight: 500;
       }
+      .slot {
+        width: 100%; max-width: 380px; margin: 0 auto 12px; padding: 17px 26px;
+        border: 1.5px dashed var(--ink-faint); border-radius: 4px; color: var(--ink-faint);
+        font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .slot + .alt { margin-top: 14px; }
       .note {
         border-top: 1px solid var(--rule); margin-top: 34px; padding-top: 22px;
         color: var(--ink-faint); font-size: 14px; line-height: 1.6; text-align: left;
@@ -65,15 +72,21 @@
     <div class="card">
       <img class="shot" src="hero.jpg" alt="" />
       <div class="mono">Payment received</div>
-      <h1>It is yours. <i>See you in November.</i></h1>
+      <h1>It is yours. <i>Both files are below.</i></h1>
       <p>
-        Your copy is reserved at the launch price, and it lands in your inbox on
-        <b>Thursday 12 November</b>. The link in your receipt always brings you back here, and
-        the files appear on this page the moment they are ready.
+        Your payment went through and the book is yours, delivered now: a PDF laid out properly
+        for reading, and an EPUB for e-readers. Download whichever you like, or both.
       </p>
 
-      <!-- Point these at the two files once they exist. -->
-      <a class="dl" href="/">Back to the book</a>
+      <!-- ============================================================
+           PLACEHOLDER: the two download links go here.
+           Not wired up yet. Replace both .slot divs with the real
+           PDF and EPUB links once the files and delivery exist.
+           ============================================================ -->
+      <div class="slot">PDF download link goes here</div>
+      <div class="slot">EPUB download link goes here</div>
+
+      <a class="alt" href="/">Back to the book</a>
 
       <div class="note">
         <p>
