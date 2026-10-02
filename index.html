@@ -24,12 +24,9 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="1200" />
     <meta property="og:image:alt" content="The How You Really Work mark: the letters HYRW above a drawing of a heart." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Instrument+Serif:ital@0;1&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" href="fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="fonts/fonts.css" />
     <style>
       :root {
         --paper: #fbf9f5;
@@ -753,7 +750,7 @@
       </div>
     </footer>
 
-    <div class="stick" id="stick">
+    <div class="stick" id="stick" inert>
       <div class="t"><b>$19.99</b><em>How Your Body Really Works</em></div>
       <a class="cta" href="#" data-role="buy">Get the book</a>
     </div>
@@ -761,18 +758,37 @@
     <script>
       // ---------------------------------------------------------------------
       // CHECKOUT: the Stripe payment link for the book. Every "Get the book"
-      // button on the page points here, so changing the link is this one line.
+      // button on the page points here, so connecting or changing it is this
+      // one line. It stays empty until the files exist; while it is empty the
+      // buttons do nothing. After payment, the Payment Link must send buyers to
+      //   https://howyoureallywork.com/thank-you.html?session_id={CHECKOUT_SESSION_ID}
       // ---------------------------------------------------------------------
-      const CHECKOUT = "https://buy.stripe.com/bJe00icIybR12S84yf9Zm04";
+      const CHECKOUT = "";
 
-      document.querySelectorAll('[data-role="buy"]').forEach((a) => (a.href = CHECKOUT));
+      document.querySelectorAll('[data-role="buy"]').forEach((a) => {
+        if (CHECKOUT) a.href = CHECKOUT;
+        else a.addEventListener("click", (e) => e.preventDefault());
+      });
 
+      // The sticky bar appears once the first "Get the book" has scrolled off the
+      // top, and steps aside while the closing one is on screen. The first button is
+      // watched against a viewport stretched far downwards, so it only stops
+      // intersecting once it is above the screen, however fast the page jumps.
       const first = document.querySelector('.hero [data-role="buy"]');
+      const last = document.querySelector('.close [data-role="buy"]');
       const stick = document.getElementById("stick");
+      let pastFirst = false;
+      let lastOnScreen = false;
+      function place() {
+        const up = pastFirst && !lastOnScreen;
+        stick.classList.toggle("up", up);
+        stick.inert = !up;
+      }
       new IntersectionObserver(
-        ([e]) => stick.classList.toggle("up", !e.isIntersecting && e.boundingClientRect.top < 0),
-        { threshold: 0 },
+        ([e]) => { pastFirst = !e.isIntersecting; place(); },
+        { rootMargin: "0px 0px 100000px 0px" },
       ).observe(first);
+      new IntersectionObserver(([e]) => { lastOnScreen = e.isIntersecting; place(); }).observe(last);
 
       // Gallery. Swiping and snapping are native scroll-snap; this adds the arrows,
       // the arrow keys and the position readout. Tab passes straight through.

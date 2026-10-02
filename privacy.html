@@ -8,12 +8,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
     <title>Privacy — How Your Body Really Works</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Instrument+Serif&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="fonts/fonts.css" />
     <style>
       :root { --paper:#fbf9f5; --ink:#17140f; --ink-soft:#57503f; --ink-faint:#8b8474; --rule:#e2dbcc; --signal:#e4f04a; }
       * { margin:0; padding:0; box-sizing:border-box; }
@@ -52,14 +47,15 @@
 
       <h2>The website itself</h2>
       <p>
-        These pages set no cookies, run no analytics and load no tracking scripts. There is no
-        consent banner because there is nothing to consent to. Fonts are served by Google
-        Fonts, which means Google sees the request your browser makes for them; that is the
-        only third party involved in simply reading this page.
+        These pages set no cookies, and there is no consent banner because there is nothing to
+        consent to. They do run one piece of analytics, <b>Cloudflare Web Analytics</b>, which
+        counts visits and page views. It sets no cookies, stores nothing on your device and
+        collects no personal data.
       </p>
       <p>
-        The site is hosted on GitHub Pages, which keeps standard server logs including IP
-        addresses, in the same way every web server on earth does.
+        The fonts are stored on this site, so the only third party involved in simply reading a
+        page is <b>Cloudflare</b>, which hosts the site and runs those analytics. Like every web
+        server on earth, it keeps standard logs, including IP addresses.
       </p>
 
       <h2>When you buy something</h2>
@@ -72,6 +68,11 @@
         That is kept so the purchase can be honoured: proving you own the book, resending it,
         fixing a failed download, and meeting the tax and accounting obligations that come with
         selling something.
+      </p>
+      <p>
+        After you pay, this site asks Stripe to confirm the payment and creates your private
+        link to the files. All that is stored for that link is Stripe's reference for your
+        purchase and the date it was made.
       </p>
 
       <h2>Email</h2>
@@ -96,7 +97,7 @@
       </p>
 
       <div class="top">
-        Last updated 26 September 2026.
+        Last updated 2 October 2026.
       </div>
     </div>
     <!-- Cloudflare Web Analytics. No cookies, no personal data. -->
