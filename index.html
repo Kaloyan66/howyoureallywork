@@ -12,7 +12,7 @@
       name="description"
       content="The honest guide to living longer, ageing slower and feeling better, with the evidence for every claim. PDF and EPUB."
     />
-    <meta name="theme-color" content="#fbf9f5" />
+    <meta name="theme-color" content="#17140f" />
     <meta property="og:title" content="How Your Body Really Works" />
     <meta
       property="og:description"
@@ -36,13 +36,21 @@
         --paper-2: #f4f0e8;
         --white: #ffffff;
         --ink: #17140f;
+        --ink-2: #24201a;
         --ink-soft: #57503f;
         --ink-faint: #8b8474;
         --rule: #e2dbcc;
         --signal: #e4f04a;
+        /* the one accent: the deep red of the anatomical heart on the cover */
+        --heart: #9e2b1e;
+        --heart-deep: #7f2117;
+        --heart-soft: #f7e9e3;
+        --on-dark: #f4efe6;
+        --on-dark-soft: #b9b0a0;
         --pad: 22px;
-        --measure: 620px;
-        --wide: 1040px;
+        --measure: 640px;
+        --wide: 1120px;
+        --radius: 10px;
       }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html { -webkit-text-size-adjust: 100%; }
@@ -56,10 +64,11 @@
         -webkit-font-smoothing: antialiased;
         padding-bottom: 88px;
       }
-      @media (min-width: 900px) { body { padding-bottom: 0; } }
-      :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+      @media (min-width: 960px) { body { padding-bottom: 0; } }
+      :focus-visible { outline: 2px solid var(--heart); outline-offset: 3px; }
+      img { max-width: 100%; }
 
-      .wrap { width: 100%; max-width: var(--measure); margin: 0 auto; padding: 0 var(--pad); }
+      .wrap { width: 100%; max-width: calc(var(--measure) + 2 * var(--pad)); margin: 0 auto; padding: 0 var(--pad); }
       .wrap.wide { max-width: calc(var(--wide) + 2 * var(--pad)); }
       .mono {
         font-family: "IBM Plex Mono", ui-monospace, monospace;
@@ -70,208 +79,316 @@
         position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
         overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
       }
+      .ico { width: 18px; height: 18px; flex: none; }
 
-      /* highlighter, the one place brand yellow appears */
+      /* highlighter: brand yellow stays a mark, never a fill for buttons */
       .mark {
         background: linear-gradient(to top, rgba(228,240,74,.85) 0 42%, transparent 42%);
         padding: 0 2px;
       }
 
+      /* ------------------------------------------------------------ buttons */
+      .cta {
+        display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+        width: 100%; max-width: 420px;
+        background: var(--heart); color: #fff;
+        border: none; border-radius: 8px; padding: 18px 26px;
+        font-family: Archivo, sans-serif; font-size: 18px; font-weight: 700;
+        letter-spacing: 0.01em; text-decoration: none; cursor: pointer;
+        box-shadow: 0 10px 24px rgba(158, 43, 30, 0.28), inset 0 -2px 0 rgba(0, 0, 0, 0.18);
+        transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+      }
+      .cta:hover { background: var(--heart-deep); transform: translateY(-1px); box-shadow: 0 14px 30px rgba(158, 43, 30, 0.34), inset 0 -2px 0 rgba(0, 0, 0, 0.18); }
+      .cta .ico { width: 20px; height: 20px; transition: transform .12s ease; }
+      .cta:hover .ico { transform: translateX(3px); }
+      .btn-line {
+        display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+        color: var(--ink); font-weight: 600; font-size: 14.5px;
+        border: 1.5px solid var(--ink); border-radius: 8px; padding: 9px 16px;
+        transition: background .12s ease, color .12s ease;
+      }
+      .btn-line:hover { background: var(--ink); color: var(--paper); }
+
       /* ------------------------------------------------------------- chrome */
       .bar {
-        border-bottom: 1px solid var(--rule);
-        background: var(--white);
+        background: var(--ink); color: var(--on-dark-soft);
         text-align: center; padding: 9px 16px;
-        font-size: 12.5px; color: var(--ink-soft); letter-spacing: 0.01em;
+        font-size: 13px; letter-spacing: 0.01em;
       }
-      .bar b { color: var(--ink); }
-      header { text-align: center; padding: 20px 0 4px; }
+      .bar b { color: #fff; }
+      .bar .mark { color: var(--ink); }
+      header {
+        border-bottom: 1px solid var(--rule); background: rgba(255, 255, 255, 0.6);
+      }
+      .head {
+        display: flex; align-items: center; justify-content: space-between; gap: 16px;
+        max-width: calc(var(--wide) + 2 * var(--pad)); margin: 0 auto; padding: 14px var(--pad);
+      }
       .wordmark {
         font-family: "IBM Plex Mono", monospace; font-weight: 500;
         font-size: 11.5px; letter-spacing: 0.22em; text-transform: uppercase;
-        color: var(--ink-soft);
+        color: var(--ink); text-decoration: none;
       }
+      .head .btn-line { padding: 7px 12px; font-size: 13.5px; border-color: var(--heart); color: var(--heart); }
+      .head .btn-line:hover { background: var(--heart); color: #fff; }
+      @media (max-width: 400px) { .head .wide-only { display: none; } }
+      @media (min-width: 960px) { .head .btn-line { padding: 9px 16px; font-size: 14.5px; } }
 
-      /* --------------------------------------------------------------- hero */
-      .hero { padding: 14px 0 44px; }
-      .hero-grid { max-width: calc(var(--wide) + 2 * var(--pad)); margin: 0 auto; }
+      /* ----------------------------------------------------- product block */
+      .pdp { max-width: calc(var(--wide) + 2 * var(--pad)); margin: 0 auto; padding: 0 0 48px; }
+      .title { padding: 18px var(--pad) 14px; }
 
-      /* gallery: native scroll-snap does the swiping, the script adds the controls */
+      .gallery { position: relative; }
       .track {
         display: flex; gap: 12px;
         overflow-x: auto; overscroll-behavior-x: contain;
         scroll-snap-type: x mandatory; scroll-padding-inline: var(--pad);
-        padding: 6px var(--pad) 24px;
+        padding: 4px var(--pad) 20px;
         scrollbar-width: none;
       }
       .track::-webkit-scrollbar { display: none; }
       .track:focus-visible { outline-offset: -2px; }
       .slide {
-        flex: 0 0 78vw; max-width: 440px; aspect-ratio: 4 / 5;
+        flex: 0 0 86vw; max-width: 520px; aspect-ratio: 4 / 5;
         scroll-snap-align: start; scroll-snap-stop: always;
-        border-radius: 4px; overflow: hidden; background: var(--paper-2);
+        border-radius: var(--radius); overflow: hidden; background: var(--paper-2);
         box-shadow: 0 6px 16px rgba(60, 48, 24, 0.13), 0 1px 3px rgba(60, 48, 24, 0.08);
       }
       .slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
-      .gnav { display: flex; align-items: center; gap: 14px; padding: 0 var(--pad); }
-      .count { color: var(--ink-soft); font-variant-numeric: tabular-nums; min-width: 44px; }
-      .count b { color: var(--ink); font-weight: 500; }
-      .bars { flex: 1; display: flex; gap: 5px; }
-      .bars i { flex: 1; height: 2px; background: var(--rule); transition: background .2s ease; }
-      .bars i.on { background: var(--ink); }
-      .gbtn {
-        flex: none; width: 44px; height: 44px; display: grid; place-items: center;
-        border: 1px solid var(--rule); border-radius: 50%;
-        background: var(--white); color: var(--ink); cursor: pointer;
+      .count {
+        position: absolute; top: 16px; left: calc(var(--pad) + 12px);
+        background: rgba(23, 20, 15, 0.72); color: #fff; border-radius: 999px;
+        padding: 3px 10px; font-size: 11px; letter-spacing: 0.1em;
+        font-variant-numeric: tabular-nums; pointer-events: none;
       }
+      .gbtn {
+        position: absolute; top: calc(50% - 32px); width: 44px; height: 44px;
+        display: none; place-items: center;
+        border: none; border-radius: 50%; cursor: pointer;
+        background: rgba(255, 255, 255, 0.94); color: var(--ink);
+        box-shadow: 0 4px 14px rgba(23, 20, 15, 0.18);
+      }
+      .gbtn.prev { left: 14px; }
+      .gbtn.next { right: 14px; }
       .gbtn svg { width: 18px; height: 18px; }
-      .gbtn:hover { border-color: var(--ink); }
-      .gbtn[aria-disabled="true"] { color: var(--ink-faint); border-color: var(--rule); opacity: .5; cursor: default; }
-      .gcap { margin-top: 8px; font-size: 12.5px; line-height: 1.5; color: var(--ink-faint); }
+      .gbtn:hover { background: #fff; color: var(--heart); }
+      .gbtn[aria-disabled="true"] { opacity: .4; cursor: default; }
+
+      .thumbs { display: flex; gap: 10px; padding: 0 var(--pad); }
+      .thumb {
+        width: 48px; aspect-ratio: 4 / 5; padding: 0; cursor: pointer;
+        border: 2px solid transparent; border-radius: 8px; overflow: hidden;
+        background: var(--paper-2); opacity: 0.7;
+        box-shadow: 0 0 0 1px var(--rule);
+        transition: opacity .15s ease, border-color .15s ease;
+      }
+      .thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .thumb:hover { opacity: 1; }
+      .thumb[aria-current="true"] { opacity: 1; border-color: var(--heart); box-shadow: none; }
 
       /* buy box */
-      .buy { padding: 24px var(--pad) 0; }
-      .eyebrow { display: none; margin-bottom: 12px; }
+      .buy { display: flex; flex-direction: column; padding: 18px var(--pad) 0; }
+      .buy .promise { order: 1; margin: 18px 0 0; }
+      .buy .gcap { order: 2; }
+      .eyebrow { display: none; color: var(--heart); margin-bottom: 10px; }
       h1 {
         font-family: "Instrument Serif", Georgia, serif; font-weight: 400;
-        font-size: 44px; line-height: 1.04; letter-spacing: -0.015em;
-        margin-bottom: 14px;
+        font-size: 36px; line-height: 1.04; letter-spacing: -0.015em;
       }
       h1 i { font-style: italic; }
-      .promise { font-size: 19px; line-height: 1.5; color: var(--ink-soft); margin-bottom: 24px; }
-      .price { display: flex; align-items: baseline; gap: 10px; }
-      .price b { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
-      .price s { color: var(--ink-faint); font-size: 18px; }
-      .until { color: var(--ink-soft); margin: 4px 0 18px; }
-      .until .mark { color: var(--ink); }
-      .cta {
-        display: inline-block; width: 100%; max-width: 400px; text-align: center;
-        background: var(--ink); color: var(--paper);
-        border: none; border-radius: 4px; padding: 18px 26px;
-        font-family: Archivo, sans-serif; font-size: 17px; font-weight: 600;
-        letter-spacing: 0.01em; text-decoration: none; cursor: pointer;
-        transition: transform .12s ease, box-shadow .12s ease;
-        box-shadow: 0 6px 18px rgba(23,20,15,.18);
+      .promise { font-size: 18px; line-height: 1.5; color: var(--ink-soft); margin-bottom: 20px; }
+      .deal {
+        background: var(--white); border: 1px solid var(--rule); border-radius: var(--radius);
+        padding: 20px; box-shadow: 0 12px 32px rgba(60, 48, 24, 0.08);
       }
-      .cta:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(23,20,15,.22); }
-      .formatline { color: var(--ink-soft); font-size: 13.5px; margin-top: 14px; }
+      .price { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; }
+      .price b { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+      .price s { color: var(--ink-faint); font-size: 19px; }
+      .save {
+        background: var(--heart-soft); color: var(--heart); border-radius: 999px;
+        font-size: 13px; font-weight: 700; padding: 4px 10px;
+      }
+      .until {
+        display: flex; align-items: center; gap: 8px; margin: 12px 0 16px;
+        font-size: 14px; color: var(--ink-soft);
+      }
+      .until .ico { color: var(--heart); width: 16px; height: 16px; }
+      .until b { color: var(--ink); }
+      .deal .cta { max-width: none; }
+      .secure {
+        display: flex; align-items: center; justify-content: center; gap: 6px;
+        margin-top: 10px; font-size: 12.5px; color: var(--ink-faint);
+      }
+      .secure .ico { width: 14px; height: 14px; }
+      .perks { list-style: none; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--rule); }
+      .perks li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: var(--ink-soft); padding: 4px 0; }
+      .perks li b { color: var(--ink); font-weight: 600; }
+      .perks .ico { color: var(--heart); margin-top: 3px; }
+      .gcap { margin-top: 14px; font-size: 12.5px; line-height: 1.5; color: var(--ink-faint); }
 
-      @media (min-width: 900px) {
-        .hero { padding: 26px 0 72px; }
-        .hero-grid {
-          display: grid; grid-template-columns: minmax(0, 480px) minmax(0, 440px);
-          justify-content: center; align-items: center; gap: 64px; padding: 0 var(--pad);
+      @media (min-width: 960px) {
+        .pdp {
+          display: grid; padding: 36px var(--pad) 80px;
+          grid-template-columns: 68px minmax(0, 500px) minmax(0, 430px);
+          grid-template-rows: auto 1fr;
+          grid-template-areas: "thumbs gallery title" "thumbs gallery buy";
+          justify-content: center; align-items: start; column-gap: 28px;
         }
-        .track { margin: 0 -18px; padding: 6px 18px 26px; scroll-padding-inline: 18px; gap: 24px; }
-        .slide { flex-basis: 100%; max-width: none; }
-        .gnav { padding: 0; }
-        .buy { padding: 0; }
+        .title { grid-area: title; padding: 0 0 12px 20px; }
         .eyebrow { display: block; }
-        h1 { font-size: 58px; }
+        .gallery { grid-area: gallery; }
+        .thumbs { grid-area: thumbs; flex-direction: column; padding: 4px 0 0; }
+        .thumb { width: 68px; }
+        .buy { grid-area: buy; padding: 0 0 0 20px; }
+        .buy .promise { order: 0; margin: 0 0 20px; }
+        .track { margin: 0 -18px; padding: 4px 18px 26px; scroll-padding-inline: 18px; gap: 24px; }
+        .slide { flex-basis: 100%; max-width: none; }
+        .count { left: 14px; top: 18px; }
+        .gbtn { display: grid; }
+        h1 { font-size: 54px; }
       }
 
       /* ------------------------------------------------------------ blocks */
-      section { padding: 46px 0; border-top: 1px solid var(--rule); }
-      section.white { background: rgba(255,255,255,.72); }
+      section { padding: 56px 0; }
+      section.white { background: rgba(255, 255, 255, 0.78); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+      section.dark { background: var(--ink); color: var(--on-dark); }
       h2 {
         font-family: "Instrument Serif", Georgia, serif; font-weight: 400;
-        font-size: 32px; line-height: 1.12; letter-spacing: -0.01em; margin-bottom: 16px;
+        font-size: 34px; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 16px;
       }
-      h2 i { font-style: italic; }
+      h2 i { font-style: italic; color: var(--heart); }
       section p { margin-bottom: 15px; color: var(--ink-soft); }
       section p:last-child { margin-bottom: 0; }
       section p b { color: var(--ink); font-weight: 600; }
-      .kick { margin-bottom: 12px; }
-      .cols { display: grid; gap: 44px; }
-      @media (min-width: 900px) {
-        section { padding: 64px 0; }
-        .cols { grid-template-columns: 1fr 1fr; column-gap: 64px; }
+      .kick { margin-bottom: 12px; color: var(--heart); }
+      .lead { font-size: 18px; }
+      @media (min-width: 960px) {
+        section { padding: 84px 0; }
+        h2 { font-size: 42px; }
       }
 
-      /* contents, typographic rather than boxed */
-      .toc { margin-top: 6px; }
-      .toc .part {
-        display: grid; grid-template-columns: 34px 1fr; gap: 14px;
-        padding: 16px 0; border-bottom: 1px solid var(--rule);
+      /* contents */
+      .toc { display: grid; gap: 12px; margin-top: 26px; }
+      .part {
+        display: grid; grid-template-columns: 44px 1fr; gap: 14px;
+        background: var(--white); border: 1px solid var(--rule); border-radius: var(--radius);
+        padding: 18px 18px 18px 16px;
       }
-      .toc .part:last-child { border-bottom: none; }
-      .toc .num {
-        font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-faint);
-        padding-top: 5px; letter-spacing: 0.08em;
+      .part .num {
+        font-family: "Instrument Serif", Georgia, serif; font-size: 28px; line-height: 1;
+        color: var(--heart); text-align: center; padding-top: 2px;
       }
-      .toc h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 3px; }
-      .toc p { font-size: 15.5px; color: var(--ink-soft); margin: 0; line-height: 1.5; }
+      .part h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; }
+      .part p { font-size: 15.5px; margin: 0; line-height: 1.5; }
+      .part.src { background: var(--paper-2); }
+      @media (min-width: 960px) { .toc { grid-template-columns: 1fr 1fr; gap: 14px; } }
 
       /* audiences */
-      .aud { display: grid; gap: 0; margin-top: 4px; }
-      .aud > div { padding: 18px 0; border-bottom: 1px solid var(--rule); }
-      .aud > div:last-child { border-bottom: none; }
-      .aud h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+      .cols { display: grid; gap: 22px; margin-top: 26px; }
+      @media (min-width: 960px) { .cols { grid-template-columns: 1fr 1fr; gap: 28px; } }
+      .aud-card { border-radius: var(--radius); padding: 26px 24px; border: 1px solid var(--rule); }
+      .aud-card.yes { background: var(--white); border-top: 4px solid var(--heart); }
+      .aud-card.no { background: var(--paper-2); border-top: 4px solid var(--ink-faint); }
+      .aud-card h2 { font-size: 30px; margin-bottom: 10px; }
+      .aud { list-style: none; }
+      .aud li { display: flex; gap: 12px; padding: 14px 0; border-top: 1px solid var(--rule); }
+      .aud li:first-child { border-top: none; }
+      .aud .ico { margin-top: 3px; }
+      .yes .ico { color: var(--heart); }
+      .no .ico { color: var(--ink-faint); }
+      .aud h3 { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
       .aud p { font-size: 15.5px; margin: 0; }
 
-      /* claims, one per chapter */
-      .claims { display: grid; margin-top: 8px; }
-      .claim { padding: 22px 0 26px; border-top: 1px solid var(--rule); }
+      /* claims, on the dark band */
+      .dark h2 { color: #fff; }
+      .dark h2 i { color: var(--signal); }
+      .dark .kick { color: var(--on-dark-soft); }
+      .dark p { color: var(--on-dark-soft); }
+      .claims { display: grid; gap: 14px; margin-top: 28px; }
+      .claim {
+        background: var(--ink-2); border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: var(--radius); padding: 24px 22px 26px;
+      }
+      .claim .ch { color: var(--on-dark-soft); }
+      .claim .ch b { color: var(--ink); background: var(--signal); border-radius: 3px; padding: 1px 6px; margin-right: 6px; font-weight: 500; }
       .claim h3 {
-        font-family: "Instrument Serif", Georgia, serif; font-weight: 400;
-        font-size: 27px; line-height: 1.15; letter-spacing: -0.005em; margin: 10px 0 10px;
+        font-family: "Instrument Serif", Georgia, serif; font-weight: 400; color: #fff;
+        font-size: 27px; line-height: 1.15; margin: 14px 0 10px;
       }
       .claim p { font-size: 16px; }
-      .claim .src { font-size: 10px; letter-spacing: 0.1em; line-height: 1.6; margin-top: 14px; }
+      .claim .src { font-size: 10px; letter-spacing: 0.1em; line-height: 1.6; margin-top: 14px; color: var(--on-dark-soft); }
       .grades { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
       .grades li {
         font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 10.5px;
-        letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink);
-        background: var(--white); border: 1px solid var(--rule); border-radius: 3px; padding: 6px 9px;
+        letter-spacing: 0.12em; text-transform: uppercase; color: var(--on-dark);
+        border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px; padding: 6px 11px;
       }
-      @media (min-width: 900px) {
-        .claims { grid-template-columns: 1fr 1fr; column-gap: 64px; }
-      }
+      @media (min-width: 960px) { .claims { grid-template-columns: 1fr 1fr; gap: 18px; } }
 
-      /* excerpt */
-      .reads { max-width: var(--measure); margin-top: 34px; }
-      .excerpt {
-        background: var(--paper-2); border-left: 3px solid var(--signal);
-        padding: 22px; margin: 6px 0 0;
-      }
+      .reads { max-width: var(--measure); margin-top: 52px; }
+      .excerpt { border-left: 3px solid var(--signal); padding: 4px 0 4px 22px; margin-top: 18px; }
       .excerpt p {
-        font-family: "Instrument Serif", Georgia, serif; font-size: 21px;
-        line-height: 1.45; color: var(--ink); margin-bottom: 13px;
+        font-family: "Instrument Serif", Georgia, serif; font-size: 22px;
+        line-height: 1.45; color: var(--on-dark); margin-bottom: 13px;
       }
       .excerpt .src {
         font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: 0.12em;
-        text-transform: uppercase; color: var(--ink-faint); margin-top: 16px;
+        text-transform: uppercase; color: var(--on-dark-soft); margin-top: 16px;
       }
 
       /* what you get */
-      .spec { margin-top: 6px; }
-      .spec > div {
-        display: grid; grid-template-columns: 96px 1fr; gap: 16px;
-        padding: 15px 0; border-bottom: 1px solid var(--rule);
+      .spec { list-style: none; display: grid; gap: 12px; margin-top: 26px; }
+      .spec > li {
+        display: flex; gap: 14px; align-items: flex-start;
+        background: var(--white); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px;
       }
-      .spec > div:last-child { border-bottom: none; }
-      .spec dt { padding-top: 4px; }
-      .spec dd { font-size: 16px; color: var(--ink-soft); }
-      .spec dd b { color: var(--ink); font-weight: 600; }
+      .spec .badge {
+        flex: none; width: 40px; height: 40px; border-radius: 50%;
+        display: grid; place-items: center; background: var(--heart-soft); color: var(--heart);
+      }
+      .spec .mono { margin-bottom: 4px; }
+      .spec p { font-size: 15.5px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+      .spec p b { color: var(--ink); font-weight: 600; }
+      .inline-buy { margin-top: 28px; text-align: center; }
+      .inline-buy .note { margin-top: 10px; font-size: 13.5px; color: var(--ink-faint); }
+      @media (min-width: 960px) { .spec { grid-template-columns: 1fr 1fr; } }
 
       /* faq */
-      details {
-        border-bottom: 1px solid var(--rule);
-      }
+      .faq { margin-top: 22px; display: grid; gap: 10px; }
+      details { background: var(--white); border: 1px solid var(--rule); border-radius: var(--radius); }
+      details[open] { border-color: var(--ink-faint); }
       summary {
-        list-style: none; cursor: pointer; padding: 16px 0;
-        font-weight: 600; font-size: 17px;
-        display: flex; justify-content: space-between; gap: 14px; align-items: flex-start;
+        list-style: none; cursor: pointer; padding: 16px 18px;
+        font-weight: 600; font-size: 16.5px;
+        display: flex; justify-content: space-between; gap: 14px; align-items: center;
       }
       summary::-webkit-details-marker { display: none; }
-      summary::after { content: "+"; color: var(--ink-faint); font-size: 20px; font-weight: 400; line-height: 1.2; }
+      summary::after {
+        content: "+"; flex: none; width: 26px; height: 26px; border-radius: 50%;
+        display: grid; place-items: center; background: var(--heart-soft); color: var(--heart);
+        font-size: 18px; font-weight: 500; line-height: 1;
+      }
       details[open] summary::after { content: "\2212"; }
-      details p { padding: 0 0 18px; font-size: 16px; }
+      details p { padding: 0 18px 18px; font-size: 16px; }
 
+      /* closing */
       .close { text-align: center; }
-      .close .until { margin: 16px 0 0; font-size: 14px; }
+      .close .cover {
+        width: 150px; aspect-ratio: 4 / 5; margin: 0 auto 26px; border-radius: 8px; overflow: hidden;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+      }
+      .close .cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .close p { max-width: 440px; margin: 0 auto 26px; }
+      .close .price { justify-content: center; margin-bottom: 18px; }
+      .close .price b { color: #fff; }
+      .close .price s { color: var(--on-dark-soft); }
+      .close .save { background: rgba(255, 255, 255, 0.1); color: #fff; }
+      .close .secure { color: var(--on-dark-soft); margin: 14px auto 4px; }
+      .close .then { font-size: 14px; margin: 0 auto; }
+      .close .then b { color: #fff; }
+
       footer {
-        border-top: 1px solid var(--rule); background: var(--paper-2);
+        background: var(--paper-2); border-top: 1px solid var(--rule);
         padding: 30px 0 44px; color: var(--ink-faint); font-size: 13px; line-height: 1.6;
       }
       footer p { margin-bottom: 11px; }
@@ -280,126 +397,155 @@
       /* sticky */
       .stick {
         position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
-        background: rgba(251,249,245,.96); backdrop-filter: blur(10px);
-        border-top: 1px solid var(--rule);
-        padding: 11px var(--pad) calc(11px + env(safe-area-inset-bottom));
+        background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(10px);
+        border-top: 1px solid var(--rule); box-shadow: 0 -8px 24px rgba(23, 20, 15, 0.08);
+        padding: 10px var(--pad) calc(10px + env(safe-area-inset-bottom));
         display: flex; align-items: center; gap: 14px;
         transform: translateY(110%); transition: transform .22s ease;
       }
       .stick.up { transform: translateY(0); }
       .stick .t { flex: 1; min-width: 0; }
-      .stick .t b { display: block; font-size: 15px; font-weight: 700; line-height: 1.2; }
+      .stick .t b { font-size: 18px; font-weight: 700; line-height: 1.2; }
+      .stick .t s { font-size: 13px; color: var(--ink-faint); margin-left: 6px; }
       .stick .t em {
-        display: block; font-style: normal; font-size: 12.5px; color: var(--ink-faint);
+        display: block; font-style: normal; font-size: 12px; color: var(--ink-faint);
         white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       }
-      .stick .cta { width: auto; flex: none; padding: 13px 20px; font-size: 15px; box-shadow: none; }
-      @media (min-width: 900px) { .stick { display: none; } }
+      .stick .cta { width: auto; flex: none; padding: 13px 18px; font-size: 15.5px; box-shadow: none; }
+      .stick .cta .ico { width: 16px; height: 16px; }
+      @media (min-width: 960px) { .stick { display: none; } }
     </style>
   </head>
   <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></symbol>
+      <symbol id="i-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17" /></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></symbol>
+      <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5M9 13h6M9 17h6" /></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z" /><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5" /></symbol>
+      <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z" /></symbol>
+      <symbol id="i-device" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5" /><path d="M11 18h2" /></symbol>
+      <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4" /><path d="M10.8 12.2L20 3M16 7l3 3" /></symbol>
+      <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z" /><circle cx="7.5" cy="7.5" r="1.5" /></symbol>
+      <symbol id="i-source" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" /></symbol>
+    </svg>
+
     <div class="bar"><b>$19.99</b> until 12 November, then $34.</div>
 
-    <header><div class="wordmark">How You Really Work</div></header>
+    <header>
+      <div class="head">
+        <a class="wordmark" href="/">How You Really Work</a>
+        <a class="btn-line" href="#" data-role="buy">Get the book<span class="wide-only">· $19.99</span></a>
+      </div>
+    </header>
 
     <main>
-      <!-- ------------------------------------------------------------ hero -->
-      <div class="hero">
-        <div class="hero-grid">
-          <!-- Photos: the originals are hero.jpg and shot-*.jpg in the root. The copies in
-               img/ are cropped to 4:5 and served as WebP at 480, 720 and full width, with
-               one JPEG fallback each. -->
-          <div class="gallery" role="region" aria-roledescription="carousel" aria-label="Photographs of the book">
-            <div class="track" id="track" tabindex="0" role="group" aria-label="Photos">
-              <div class="slide" role="group" aria-roledescription="slide" aria-label="1 of 4">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="img/standing-480.webp 480w, img/standing-720.webp 720w, img/standing-1000.webp 1000w"
-                    sizes="(min-width: 900px) 480px, 78vw"
-                  />
-                  <img
-                    src="img/standing-720.jpg" width="720" height="900" fetchpriority="high" decoding="async"
-                    alt="The book standing upright on a pale plaster ledge in soft window light. The cream cover reads How Your Body Really Works, above an anatomical model of a human heart."
-                  />
-                </picture>
-              </div>
-              <div class="slide" role="group" aria-roledescription="slide" aria-label="2 of 4">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="img/flatlay-480.webp 480w, img/flatlay-720.webp 720w, img/flatlay-800.webp 800w"
-                    sizes="(min-width: 900px) 480px, 78vw"
-                  />
-                  <img
-                    src="img/flatlay-720.jpg" width="720" height="900" loading="lazy" decoding="async"
-                    alt="The book lying flat on a pale stone surface in slanting sunlight, next to a cup of black coffee and a pair of tortoiseshell glasses."
-                  />
-                </picture>
-              </div>
-              <div class="slide" role="group" aria-roledescription="slide" aria-label="3 of 4">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="img/desk-480.webp 480w, img/desk-747.webp 747w"
-                    sizes="(min-width: 900px) 480px, 78vw"
-                  />
-                  <img
-                    src="img/desk-747.jpg" width="747" height="934" loading="lazy" decoding="async"
-                    alt="The book lying on a worn wooden desk, striped with sunlight from a window."
-                  />
-                </picture>
-              </div>
-              <div class="slide" role="group" aria-roledescription="slide" aria-label="4 of 4">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="img/phone-480.webp 480w, img/phone-720.webp 720w, img/phone-899.webp 899w"
-                    sizes="(min-width: 900px) 480px, 78vw"
-                  />
-                  <img
-                    src="img/phone-720.jpg" width="720" height="900" loading="lazy" decoding="async"
-                    alt="The cover of the book on a phone screen, the phone lying on a wooden table beside a cup of coffee."
-                  />
-                </picture>
-              </div>
+      <!-- --------------------------------------------------- product block -->
+      <!-- Photos: the originals are shot-standing.jpg, shot-desk.jpg and shot-phone.jpg in
+           the root. The copies in img/ are cropped to 4:5 and served as WebP at 480, 720 and
+           full width, with one JPEG fallback each, plus small thumbnails. -->
+      <div class="pdp hero">
+        <div class="title">
+          <div class="eyebrow mono">Living longer · Ageing slower · Feeling better</div>
+          <h1>How Your Body <i>Really</i> Works</h1>
+        </div>
+        <div class="gallery" role="region" aria-roledescription="carousel" aria-label="Photographs of the book">
+          <div class="track" id="track" tabindex="0" role="group" aria-label="Photos">
+            <div class="slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="img/standing-480.webp 480w, img/standing-720.webp 720w, img/standing-1000.webp 1000w"
+                  sizes="(min-width: 960px) 500px, 86vw"
+                />
+                <img
+                  src="img/standing-720.jpg" width="720" height="900" fetchpriority="high" decoding="async"
+                  alt="The book standing upright on a pale plaster ledge in soft window light. The cream cover reads How Your Body Really Works, above an anatomical model of a human heart."
+                />
+              </picture>
             </div>
-
-            <div class="gnav">
-              <span class="count mono" aria-hidden="true"><b data-count>1</b> / 4</span>
-              <span class="bars" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></span>
-              <button class="gbtn" type="button" data-step="-1" aria-label="Previous photo" aria-controls="track" aria-disabled="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
-              </button>
-              <button class="gbtn" type="button" data-step="1" aria-label="Next photo" aria-controls="track" aria-disabled="false">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
-              </button>
+            <div class="slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="img/desk-480.webp 480w, img/desk-720.webp 720w, img/desk-819.webp 819w"
+                  sizes="(min-width: 960px) 500px, 86vw"
+                />
+                <img
+                  src="img/desk-720.jpg" width="720" height="900" loading="lazy" decoding="async"
+                  alt="The book lying on a warm wooden desk, striped with sunlight from a window."
+                />
+              </picture>
             </div>
-            <p class="sr-only" aria-live="polite" data-live></p>
+            <div class="slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="img/phone-480.webp 480w, img/phone-720.webp 720w, img/phone-899.webp 899w"
+                  sizes="(min-width: 960px) 500px, 86vw"
+                />
+                <img
+                  src="img/phone-720.jpg" width="720" height="900" loading="lazy" decoding="async"
+                  alt="The cover of the book on a phone screen, the phone lying on a wooden table beside a cup of coffee."
+                />
+              </picture>
+            </div>
           </div>
+          <span class="count mono" aria-hidden="true"><b data-count>1</b> / 3</span>
+          <button class="gbtn prev" type="button" aria-label="Previous photo" aria-controls="track" aria-disabled="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+          </button>
+          <button class="gbtn next" type="button" aria-label="Next photo" aria-controls="track" aria-disabled="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+          </button>
+          <p class="sr-only" aria-live="polite" data-live></p>
+        </div>
 
-          <div class="buy">
-            <div class="eyebrow mono">Living longer · Ageing slower · Feeling better</div>
-            <h1>How Your Body <i>Really</i> Works</h1>
-            <p class="promise">
-              Everything your body is actually doing, why it goes wrong, and the small accessible
-              things that genuinely change <span class="mark">how long and how well you live.</span>
-            </p>
+        <div class="thumbs" role="group" aria-label="Choose a photo">
+          <button class="thumb" type="button" aria-label="Photo 1: the book standing upright" aria-current="true">
+            <img src="img/standing-thumb.webp" width="160" height="200" alt="" decoding="async" />
+          </button>
+          <button class="thumb" type="button" aria-label="Photo 2: the book on a wooden desk" aria-current="false">
+            <img src="img/desk-thumb.webp" width="160" height="200" alt="" decoding="async" />
+          </button>
+          <button class="thumb" type="button" aria-label="Photo 3: the cover on a phone" aria-current="false">
+            <img src="img/phone-thumb.webp" width="160" height="200" alt="" decoding="async" />
+          </button>
+        </div>
 
+        <div class="buy">
+          <p class="promise">
+            Everything your body is actually doing, why it goes wrong, and the small accessible
+            things that genuinely change <span class="mark">how long and how well you live.</span>
+          </p>
+
+          <div class="deal">
             <div class="price">
               <b>$19.99</b><s><span class="sr-only">regular price </span>$34</s>
+              <span class="save">Save 41%</span>
             </div>
-            <p class="until mono"><span class="mark">Launch price</span> until 12 November</p>
-            <a class="cta" href="#" data-role="buy">Get the book</a>
-
-            <p class="formatline">
-              PDF and EPUB · 200 pages · delivered immediately · read on anything
+            <p class="until">
+              <svg class="ico" aria-hidden="true"><use href="#i-clock" /></svg>
+              <span><b>Launch price</b> until 12 November<span data-days></span></span>
             </p>
-            <p class="gcap">
-              The photographs show the book as an object so you can see the design. What you get
-              is the PDF and the EPUB.
+            <a class="cta" href="#" data-role="buy">Get the book <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            <p class="secure">
+              <svg class="ico" aria-hidden="true"><use href="#i-lock" /></svg>
+              Secure checkout with Stripe
             </p>
+            <ul class="perks">
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg><span><b>PDF and EPUB</b>, delivered immediately</span></li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg><span><b>200 pages</b>: seven parts, thirty-four chapters</span></li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg><span><b>A source next to every claim</b>, so you can check it</span></li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg><span><b>Reads on anything</b>: phone, tablet, laptop or e-reader</span></li>
+            </ul>
           </div>
+          <p class="gcap">
+            The photographs show the book as an object so you can see the design. What you get is
+            the PDF and the EPUB.
+          </p>
         </div>
       </div>
 
@@ -407,8 +553,8 @@
       <section class="white">
         <div class="wrap">
           <div class="kick mono">Why this exists</div>
-          <h2>You have been sold to your whole life.</h2>
-          <p>
+          <h2>You have been sold to your <i>whole life.</i></h2>
+          <p class="lead">
             Every question you have ever had about your own body has an answer somewhere, and
             underneath that answer there is nearly always someone with something to sell you.
             So you get four tabs open, two of them contradicting each other, two of them
@@ -431,10 +577,10 @@
 
       <!-- ------------------------------------------------------- contents -->
       <section>
-        <div class="wrap">
+        <div class="wrap wide">
           <div class="kick mono">What is inside</div>
-          <h2>Seven parts. Thirty-four chapters.</h2>
-          <p style="margin-bottom: 22px">
+          <h2>Seven parts. <i>Thirty-four chapters.</i></h2>
+          <p class="lead" style="max-width: 640px">
             It starts with how the machine works, because a habit you understand is a habit that
             survives a bad week. Every chapter ends with two or three concrete things, sized
             honestly.
@@ -499,7 +645,7 @@
                 deliberately small enough to still exist in March.</p>
               </div>
             </div>
-            <div class="part">
+            <div class="part src">
               <div class="num">↳</div>
               <div>
                 <h3>Every source</h3>
@@ -513,64 +659,86 @@
 
       <!-- ------------------------------------------------------ audiences -->
       <section class="white">
-        <div class="wrap wide cols">
-          <div>
-            <div class="kick mono">Who it is for</div>
-            <h2>One body, three reasons to read it.</h2>
-            <div class="aud">
-              <div>
-                <h3>If you are in your teens or twenties</h3>
-                <p>Energy, strength, and how you look, and the decade where small habits compound
-                into the biggest difference of your life. Nothing in here is sold to you.</p>
-              </div>
-              <div>
-                <h3>If you are somewhere in the middle</h3>
-                <p>Skin, ageing, and the creeping sense of running on less than you used to. What
-                actually changes those, honestly ranked, and what is worth ignoring entirely.</p>
-              </div>
-              <div>
-                <h3>If you are thinking about the years ahead</h3>
-                <p>How chronic conditions really develop, which numbers are worth knowing about
-                yourself, and what the evidence says about staying well rather than just alive.</p>
-              </div>
+        <div class="wrap wide">
+          <div class="kick mono">Who it is for, and who it is not</div>
+          <div class="cols">
+            <div class="aud-card yes">
+              <h2>One body, three reasons to read it.</h2>
+              <ul class="aud">
+                <li>
+                  <svg class="ico" aria-hidden="true"><use href="#i-check" /></svg>
+                  <div>
+                    <h3>If you are in your teens or twenties</h3>
+                    <p>Energy, strength, and how you look, and the decade where small habits compound
+                    into the biggest difference of your life. Nothing in here is sold to you.</p>
+                  </div>
+                </li>
+                <li>
+                  <svg class="ico" aria-hidden="true"><use href="#i-check" /></svg>
+                  <div>
+                    <h3>If you are somewhere in the middle</h3>
+                    <p>Skin, ageing, and the creeping sense of running on less than you used to. What
+                    actually changes those, honestly ranked, and what is worth ignoring entirely.</p>
+                  </div>
+                </li>
+                <li>
+                  <svg class="ico" aria-hidden="true"><use href="#i-check" /></svg>
+                  <div>
+                    <h3>If you are thinking about the years ahead</h3>
+                    <p>How chronic conditions really develop, which numbers are worth knowing about
+                    yourself, and what the evidence says about staying well rather than just alive.</p>
+                  </div>
+                </li>
+              </ul>
             </div>
-          </div>
-          <div>
-            <div class="kick mono">Who it is not for</div>
-            <h2>And four reasons not to.</h2>
-            <div class="aud">
-              <div>
-                <h3>If you want a diagnosis or a treatment plan</h3>
-                <p>This is mechanism, not medical advice, and chapter 19 exists specifically to
-                send you to a doctor.</p>
-              </div>
-              <div>
-                <h3>If you want a printed copy</h3>
-                <p>PDF and EPUB only. Nothing is printed and nothing is shipped.</p>
-              </div>
-              <div>
-                <h3>If you want to be told a supplement will fix it</h3>
-                <p>Chapter 34 grades what is marketed to you, and most of it does not come out
-                well.</p>
-              </div>
-              <div>
-                <h3>If you already read the primary literature</h3>
-                <p>You will find it introductory, and that is deliberate.</p>
-              </div>
+            <div class="aud-card no">
+              <h2>And four reasons not to.</h2>
+              <ul class="aud">
+                <li>
+                  <svg class="ico" aria-hidden="true"><use href="#i-cross" /></svg>
+                  <div>
+                    <h3>If you want a diagnosis or a treatment plan</h3>
+                    <p>This is mechanism, not medical advice, and chapter 19 exists specifically to
+                    send you to a doctor.</p>
+                  </div>
+                </li>
+                <li>
+                  <svg class="ico" aria-hidden="true"><use href="#i-cross" /></svg>
+                  <div>
+                    <h3>If you want a printed copy</h3>
+                    <p>PDF and EPUB only. Nothing is printed and nothing is shipped.</p>
+                  </div>
+                </li>
+                <li>
+                  <svg class="ico" aria-hidden="true"><use href="#i-cross" /></svg>
+                  <div>
+                    <h3>If you want to be told a supplement will fix it</h3>
+                    <p>Chapter 34 grades what is marketed to you, and most of it does not come out
+                    well.</p>
+                  </div>
+                </li>
+                <li>
+                  <svg class="ico" aria-hidden="true"><use href="#i-cross" /></svg>
+                  <div>
+                    <h3>If you already read the primary literature</h3>
+                    <p>You will find it introductory, and that is deliberate.</p>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
       <!-- --------------------------------------------------------- claims -->
-      <section id="claims">
+      <section class="dark" id="claims">
         <div class="wrap wide">
           <div class="kick mono">From the book</div>
-          <h2>Four things it will tell you.</h2>
+          <h2>Four things it will <i>tell you.</i></h2>
 
           <div class="claims">
             <article class="claim">
-              <div class="mono">Chapter 1 · The clock that runs everything</div>
+              <div class="mono ch"><b>Ch. 1</b> The clock that runs everything</div>
               <h3>Your 3pm crash is not your lunch.</h3>
               <p>
                 The dip shows up in people who skipped lunch entirely, and in constant-routine
@@ -580,7 +748,7 @@
               </p>
             </article>
             <article class="claim">
-              <div class="mono">Chapter 20 · What mood is, mechanically</div>
+              <div class="mono ch"><b>Ch. 20</b> What mood is, mechanically</div>
               <h3>The serotonin “chemical imbalance” story is not current science.</h3>
               <p>
                 It is the story most people were told. The chapter explains what replaced it,
@@ -588,7 +756,7 @@
               </p>
             </article>
             <article class="claim">
-              <div class="mono">Chapter 25 · Skin</div>
+              <div class="mono ch"><b>Ch. 25</b> Skin</div>
               <h3>The single biggest thing ageing your face is not sold in a bottle.</h3>
               <p>
                 UVA passes through ordinary window glass and reaches the collagen layer, where it
@@ -599,7 +767,7 @@
               <p class="src mono">Gordon &amp; Brieva, New England Journal of Medicine 366:e25, 2012</p>
             </article>
             <article class="claim">
-              <div class="mono">Chapter 34 · What to ignore</div>
+              <div class="mono ch"><b>Ch. 34</b> What to ignore</div>
               <h3>Everything marketed to you, graded.</h3>
               <p>Five grades, from works to avoid:</p>
               <ul class="grades">
@@ -615,7 +783,7 @@
           <div class="reads">
             <div class="kick mono">How it reads</div>
             <h2>This is the voice of the whole book.</h2>
-            <p style="margin-bottom: 20px">
+            <p>
               No hype, no hedging, no padding. It explains the thing, tells you how sure we
               actually are, and then tells you what to do about it. Two hundred pages of this.
             </p>
@@ -640,39 +808,61 @@
 
       <!-- ---------------------------------------------------- what you get -->
       <section class="white">
-        <div class="wrap">
+        <div class="wrap wide">
           <div class="kick mono">What you get</div>
-          <h2>Two files, the moment you pay.</h2>
-          <dl class="spec">
-            <div>
-              <dt class="mono">Formats</dt>
-              <dd><b>PDF and EPUB.</b> A PDF laid out properly for reading, and an EPUB for
-              e-readers. You get both.</dd>
-            </div>
-            <div>
-              <dt class="mono">Length</dt>
-              <dd><b>200 pages.</b> Seven parts, thirty-four chapters, and every source,
-              numbered and grouped by chapter.</dd>
-            </div>
-            <div>
-              <dt class="mono">Delivery</dt>
-              <dd><b>Immediate.</b> Both files are yours the moment you pay. This is not a
-              pre-order.</dd>
-            </div>
-            <div>
-              <dt class="mono">Reads on</dt>
-              <dd><b>Anything.</b> Phone, tablet, laptop or e-reader.</dd>
-            </div>
-            <div>
-              <dt class="mono">Yours to keep</dt>
-              <dd>On as many of your own devices as you like, including every revision that
-              follows.</dd>
-            </div>
-            <div>
-              <dt class="mono">Price</dt>
-              <dd><b>$19.99 until 12 November, then $34.</b> Paid once.</dd>
-            </div>
-          </dl>
+          <h2>Two files, <i>the moment you pay.</i></h2>
+          <ul class="spec">
+            <li>
+              <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-file" /></svg></span>
+              <div>
+                <div class="mono">Formats</div>
+                <p><b>PDF and EPUB.</b> A PDF laid out properly for reading, and an EPUB for
+                e-readers. You get both.</p>
+              </div>
+            </li>
+            <li>
+              <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-book" /></svg></span>
+              <div>
+                <div class="mono">Length</div>
+                <p><b>200 pages.</b> Seven parts, thirty-four chapters, and every source,
+                numbered and grouped by chapter.</p>
+              </div>
+            </li>
+            <li>
+              <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-bolt" /></svg></span>
+              <div>
+                <div class="mono">Delivery</div>
+                <p><b>Immediate.</b> Both files are yours the moment you pay. This is not a
+                pre-order.</p>
+              </div>
+            </li>
+            <li>
+              <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-device" /></svg></span>
+              <div>
+                <div class="mono">Reads on</div>
+                <p><b>Anything.</b> Phone, tablet, laptop or e-reader.</p>
+              </div>
+            </li>
+            <li>
+              <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-key" /></svg></span>
+              <div>
+                <div class="mono">Yours to keep</div>
+                <p>On as many of your own devices as you like, including every revision that
+                follows.</p>
+              </div>
+            </li>
+            <li>
+              <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-tag" /></svg></span>
+              <div>
+                <div class="mono">Price</div>
+                <p><b>$19.99 until 12 November, then $34.</b> Paid once.</p>
+              </div>
+            </li>
+          </ul>
+          <div class="inline-buy">
+            <a class="cta" href="#" data-role="buy">Get the book for $19.99 <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            <p class="note">PDF and EPUB · delivered immediately</p>
+          </div>
         </div>
       </section>
 
@@ -682,59 +872,67 @@
           <div class="kick mono">Before you buy</div>
           <h2>The honest answers.</h2>
 
-          <details>
-            <summary>Is there a refund?</summary>
-            <p>
-              No. It is a file, once it is on your device it cannot be returned. That is why
-              the whole table of contents is on this page, why there is a passage of the real
-              writing above, and why the price is under twenty dollars rather than ninety-seven. You
-              can see exactly what
-              you are buying before you buy it.
-            </p>
-          </details>
-          <details>
-            <summary>Is this just the videos written down?</summary>
-            <p>
-              No. A video explains one mechanism in forty seconds. The book is the whole picture
-              at once, how the systems connect, how they change across a life, and what to
-              actually do, with the evidence shown. The videos are the trailer.
-            </p>
-          </details>
-          <details>
-            <summary>When do I get it?</summary>
-            <p>
-              The moment you pay, both files at once. It is not a pre-order: 12 November is only
-              the day the price goes up.
-            </p>
-          </details>
-          <details>
-            <summary>How do I know any of it is true?</summary>
-            <p>
-              Every factual claim carries a numbered source, and they are all listed at the back
-              so you can check them. Where the evidence is thin or contested, the book says so.
-              That is the entire reason it exists.
-            </p>
-          </details>
-          <details>
-            <summary>Is it medical advice?</summary>
-            <p>
-              No, and it never pretends to be. It explains mechanisms and weighs evidence. It
-              does not diagnose anything, it does not treat anything, and in several places it
-              tells you plainly to go and see a doctor.
-            </p>
-          </details>
+          <div class="faq">
+            <details>
+              <summary>Is there a refund?</summary>
+              <p>
+                No. It is a file, once it is on your device it cannot be returned. That is why
+                the whole table of contents is on this page, why there is a passage of the real
+                writing above, and why the price is under twenty dollars rather than ninety-seven.
+                You can see exactly what you are buying before you buy it.
+              </p>
+            </details>
+            <details>
+              <summary>Is this just the videos written down?</summary>
+              <p>
+                No. A video explains one mechanism in forty seconds. The book is the whole picture
+                at once, how the systems connect, how they change across a life, and what to
+                actually do, with the evidence shown. The videos are the trailer.
+              </p>
+            </details>
+            <details>
+              <summary>When do I get it?</summary>
+              <p>
+                The moment you pay, both files at once. It is not a pre-order: 12 November is only
+                the day the price goes up.
+              </p>
+            </details>
+            <details>
+              <summary>How do I know any of it is true?</summary>
+              <p>
+                Every factual claim carries a numbered source, and they are all listed at the back
+                so you can check them. Where the evidence is thin or contested, the book says so.
+                That is the entire reason it exists.
+              </p>
+            </details>
+            <details>
+              <summary>Is it medical advice?</summary>
+              <p>
+                No, and it never pretends to be. It explains mechanisms and weighs evidence. It
+                does not diagnose anything, it does not treat anything, and in several places it
+                tells you plainly to go and see a doctor.
+              </p>
+            </details>
+          </div>
         </div>
       </section>
 
       <!-- ---------------------------------------------------------- close -->
-      <section class="close white">
+      <section class="close dark">
         <div class="wrap">
-          <h2>Under twenty dollars. Once.</h2>
-          <p style="max-width: 420px; margin: 0 auto 26px">
-            Less than one month of a supplement the book will probably tell you to stop buying.
+          <div class="cover"><img src="img/standing-480.webp" width="480" height="600" loading="lazy" decoding="async" alt="" /></div>
+          <h2>Under twenty dollars. <i>Once.</i></h2>
+          <p>Less than one month of a supplement the book will probably tell you to stop buying.</p>
+          <div class="price">
+            <b>$19.99</b><s><span class="sr-only">regular price </span>$34</s>
+            <span class="save">Save 41%</span>
+          </div>
+          <a class="cta" href="#" data-role="buy">Get the book <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+          <p class="secure">
+            <svg class="ico" aria-hidden="true"><use href="#i-lock" /></svg>
+            Secure checkout with Stripe
           </p>
-          <a class="cta" href="#" data-role="buy">Get the book</a>
-          <p class="until"><b>$19.99</b> until 12 November, then $34.</p>
+          <p class="then"><b>$19.99</b> until 12 November, then $34.</p>
         </div>
       </section>
     </main>
@@ -754,8 +952,8 @@
     </footer>
 
     <div class="stick" id="stick" inert>
-      <div class="t"><b>$19.99</b><em>How Your Body Really Works</em></div>
-      <a class="cta" href="#" data-role="buy">Get the book</a>
+      <div class="t"><b>$19.99</b><s><span class="sr-only">regular price </span>$34</s><em>How Your Body Really Works · PDF and EPUB</em></div>
+      <a class="cta" href="#" data-role="buy">Get the book <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
     </div>
 
     <script>
@@ -767,11 +965,16 @@
 
       document.querySelectorAll('[data-role="buy"]').forEach((a) => (a.href = CHECKOUT));
 
-      // The sticky bar appears once the first "Get the book" has scrolled off the
-      // top, and steps aside while the closing one is on screen. The first button is
+      // Days left at the launch price, counted to the start of 12 November.
+      const days = Math.ceil((new Date(2026, 10, 12) - new Date()) / 864e5);
+      if (days > 1) document.querySelector("[data-days]").textContent = ` · ${days} days left`;
+      else if (days === 1) document.querySelector("[data-days]").textContent = " · last day";
+
+      // The sticky bar appears once the main "Get the book" has scrolled off the
+      // top, and steps aside while the closing one is on screen. The main button is
       // watched against a viewport stretched far downwards, so it only stops
       // intersecting once it is above the screen, however fast the page jumps.
-      const first = document.querySelector('.hero [data-role="buy"]');
+      const first = document.querySelector('.hero .deal [data-role="buy"]');
       const last = document.querySelector('.close [data-role="buy"]');
       const stick = document.getElementById("stick");
       let pastFirst = false;
@@ -788,20 +991,21 @@
       new IntersectionObserver(([e]) => { lastOnScreen = e.isIntersecting; place(); }).observe(last);
 
       // Gallery. Swiping and snapping are native scroll-snap; this adds the arrows,
-      // the arrow keys and the position readout. Tab passes straight through.
+      // the thumbnails, the arrow keys and the position readout. Tab passes through.
       const track = document.getElementById("track");
       const slides = [...track.querySelectorAll(".slide")];
-      const bars = document.querySelectorAll(".bars i");
+      const thumbs = document.querySelectorAll(".thumb");
       const count = document.querySelector("[data-count]");
       const live = document.querySelector("[data-live]");
-      const [prev, next] = document.querySelectorAll(".gbtn");
+      const prev = document.querySelector(".gbtn.prev");
+      const next = document.querySelector(".gbtn.next");
       const still = matchMedia("(prefers-reduced-motion: reduce)");
       let current = 0;
 
       function show(i) {
         if (i === current) return;
         current = i;
-        bars.forEach((b, j) => b.classList.toggle("on", j === i));
+        thumbs.forEach((t, j) => t.setAttribute("aria-current", j === i));
         count.textContent = i + 1;
         live.textContent = `Photo ${i + 1} of ${slides.length}. ${slides[i].querySelector("img").alt}`;
         prev.setAttribute("aria-disabled", i === 0);
@@ -833,6 +1037,7 @@
 
       prev.addEventListener("click", () => go(current - 1));
       next.addEventListener("click", () => go(current + 1));
+      thumbs.forEach((t, i) => t.addEventListener("click", () => go(i)));
       track.addEventListener("keydown", (e) => {
         const to = { ArrowLeft: current - 1, ArrowRight: current + 1, Home: 0, End: slides.length - 1 }[e.key];
         if (to === undefined) return;
