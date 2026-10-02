@@ -7,15 +7,19 @@
     <link rel="icon" type="image/png" sizes="16x16" href="icon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
-    <title>Your files — How Your Body Really Works</title>
+    <title>Thank you — How Your Body Really Works</title>
     <meta name="robots" content="noindex" />
-    <meta name="referrer" content="no-referrer" />
     <meta name="theme-color" content="#fbf9f5" />
-    <link rel="stylesheet" href="fonts/fonts.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
     <style>
       :root {
-        --paper: #fbf9f5; --paper-2: #f4f0e8; --white: #ffffff; --ink: #17140f;
-        --ink-soft: #57503f; --ink-faint: #8b8474; --rule: #e2dbcc; --signal: #e4f04a;
+        --paper: #fbf9f5; --ink: #17140f; --ink-soft: #57503f;
+        --ink-faint: #8b8474; --rule: #e2dbcc; --signal: #e4f04a;
       }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body {
@@ -25,8 +29,6 @@
         min-height: 100vh; display: flex; align-items: center; justify-content: center;
         padding: 40px 22px;
       }
-      :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-      [hidden] { display: none !important; }
       .card { width: 100%; max-width: 560px; text-align: center; }
       .mono {
         font-family: "IBM Plex Mono", monospace; font-weight: 500;
@@ -40,111 +42,51 @@
       }
       h1 i { font-style: italic; }
       p { color: var(--ink-soft); margin-bottom: 16px; }
-      p b { color: var(--ink); }
-      .shot { width: 100%; max-width: 220px; margin: 6px auto 26px; display: block; border-radius: 4px; }
+      .shot { width: 100%; max-width: 260px; margin: 6px auto 26px; display: block; border-radius: 4px; }
       .dl {
         display: block; width: 100%; max-width: 380px; margin: 0 auto 12px;
         background: var(--ink); color: var(--paper); text-decoration: none;
-        border: 1.5px solid var(--ink); border-radius: 4px; padding: 17px 26px;
-        font-size: 17px; font-weight: 600;
+        border-radius: 4px; padding: 18px 26px; font-size: 17px; font-weight: 600;
         box-shadow: 0 6px 18px rgba(23,20,15,.18);
       }
-      .dl.second { background: var(--white); color: var(--ink); box-shadow: none; }
-      .dl small { display: block; font-size: 12.5px; font-weight: 400; opacity: .75; margin-top: 2px; }
-      .keep {
-        margin: 30px 0 0; padding: 20px; text-align: left;
-        background: var(--white); border: 1px solid var(--rule); border-radius: 4px;
-      }
-      .keep p { font-size: 15px; margin-bottom: 12px; }
-      .link {
-        display: flex; gap: 8px; align-items: stretch;
-      }
-      .link input {
-        flex: 1; min-width: 0; font: 13px/1.4 "IBM Plex Mono", monospace; color: var(--ink);
-        background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: 10px 12px;
-      }
-      .link button {
-        flex: none; font: 600 14px Archivo, sans-serif; color: var(--ink); cursor: pointer;
-        background: var(--white); border: 1.5px solid var(--ink); border-radius: 4px; padding: 0 16px;
-      }
-      .back {
-        display: inline-block; margin-top: 26px; color: var(--ink); text-decoration: none;
+      .alt {
+        display: inline-block; color: var(--ink); text-decoration: none;
         border-bottom: 1.5px solid var(--signal); padding-bottom: 2px;
         font-size: 15.5px; font-weight: 500;
       }
+      .slot {
+        width: 100%; max-width: 380px; margin: 0 auto 12px; padding: 17px 26px;
+        border: 1.5px dashed var(--ink-faint); border-radius: 4px; color: var(--ink-faint);
+        font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .slot + .alt { margin-top: 14px; }
       .note {
         border-top: 1px solid var(--rule); margin-top: 34px; padding-top: 22px;
         color: var(--ink-faint); font-size: 14px; line-height: 1.6; text-align: left;
       }
-      .note p { color: var(--ink-faint); }
       .note b { color: var(--ink-soft); }
     </style>
   </head>
   <body>
-    <main class="card">
+    <div class="card">
       <img class="shot" src="hero.jpg" alt="" />
+      <div class="mono">Payment received</div>
+      <h1>It is yours. <i>Both files are below.</i></h1>
+      <p>
+        Your payment went through and the book is yours, delivered now: a PDF laid out properly
+        for reading, and an EPUB for e-readers. Download whichever you like, or both.
+      </p>
 
-      <!-- Shown until the payment check answers, and to anyone without JavaScript. -->
-      <div data-state="checking">
-        <div class="mono">One moment</div>
-        <h1>Checking your payment.</h1>
-        <p>
-          This takes a second or two. If nothing changes, refresh the page, or reply to your
-          receipt and it gets sorted.
-        </p>
-      </div>
+      <!-- ============================================================
+           PLACEHOLDER: the two download links go here.
+           Not wired up yet. Replace both .slot divs with the real
+           PDF and EPUB links once the files and delivery exist.
+           ============================================================ -->
+      <div class="slot">PDF download link goes here</div>
+      <div class="slot">EPUB download link goes here</div>
 
-      <div data-state="ready" hidden>
-        <div class="mono">Payment received</div>
-        <h1>It is yours. <i>Both files are below.</i></h1>
-        <p>
-          A PDF laid out properly for reading, and an EPUB for e-readers. Download whichever
-          you like, or both.
-        </p>
-        <a class="dl" data-file="pdf" href="#">Download the PDF</a>
-        <a class="dl second" data-file="epub" href="#">Download the EPUB</a>
-
-        <div class="keep">
-          <p>
-            <b>Keep this link.</b> It brings you back to these downloads whenever you need them.
-            Your Stripe receipt links to Stripe, not here, so bookmark this page or save the link
-            somewhere you will find it.
-          </p>
-          <div class="link">
-            <input id="mylink" type="text" readonly value="" aria-label="Your link to these downloads" />
-            <button type="button" data-copy>Copy</button>
-          </div>
-        </div>
-      </div>
-
-      <div data-state="processing" hidden>
-        <div class="mono">Payment received</div>
-        <h1>Your payment is <i>still clearing.</i></h1>
-        <p>
-          Some payment methods take a little while to confirm. Your files will be on this page
-          as soon as it does, so leave it open and refresh in a few minutes.
-        </p>
-      </div>
-
-      <div data-state="invalid" hidden>
-        <div class="mono">Nothing found</div>
-        <h1>This link does not open a purchase.</h1>
-        <p>
-          It may be incomplete, or the payment did not go through. If you have paid, reply to
-          your receipt and you will get your files.
-        </p>
-      </div>
-
-      <div data-state="error" hidden>
-        <div class="mono">Not your fault</div>
-        <h1>Something went wrong on our side.</h1>
-        <p>
-          Refresh the page in a minute. If the files still do not appear, reply to your
-          receipt and it gets sorted.
-        </p>
-      </div>
-
-      <a class="back" href="/">Back to the book</a>
+      <a class="alt" href="/">Back to the book</a>
 
       <div class="note">
         <p>
@@ -156,56 +98,7 @@
           sorted. This book is educational and is not medical advice.
         </p>
       </div>
-    </main>
-
-    <script>
-      // Stripe sends buyers here with ?session_id=cs_... The Function behind
-      // /api/download checks that payment with Stripe and returns the buyer's token.
-      // The token then lives in the address bar after a #, which is never sent to any
-      // server or analytics, so the saved link is /thank-you.html#t=TOKEN.
-      const query = new URLSearchParams(location.search);
-      const session = query.get("session_id");
-      const saved = new URLSearchParams(location.hash.slice(1)).get("t") || query.get("t");
-      if (session || query.has("t")) history.replaceState(null, "", location.pathname + location.hash);
-
-      function show(state) {
-        document.querySelectorAll("[data-state]").forEach((el) => (el.hidden = el.dataset.state !== state));
-      }
-
-      async function load() {
-        if (!session && !saved) return show("invalid");
-        const ask = session ? "session_id=" + encodeURIComponent(session) : "t=" + encodeURIComponent(saved);
-        let data;
-        try {
-          const res = await fetch("/api/download?" + ask, { cache: "no-store" });
-          data = await res.json();
-        } catch {
-          return show("error");
-        }
-        if (data.status !== "ready") return show(["processing", "invalid"].includes(data.status) ? data.status : "error");
-
-        for (const file of data.files) {
-          const link = document.querySelector(`[data-file="${file.format}"]`);
-          if (link) link.href = file.href;
-        }
-        const mine = location.origin + location.pathname + "#t=" + data.token;
-        history.replaceState(null, "", mine);
-        document.getElementById("mylink").value = mine;
-        show("ready");
-      }
-
-      document.querySelector("[data-copy]").addEventListener("click", async (e) => {
-        const input = document.getElementById("mylink");
-        try {
-          await navigator.clipboard.writeText(input.value);
-          e.target.textContent = "Copied";
-        } catch {
-          input.select();
-        }
-      });
-
-      load();
-    </script>
+    </div>
     <!-- Cloudflare Web Analytics. No cookies, no personal data. -->
     <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js'
       data-cf-beacon='{"token": "e8763b874844456f8cd7d994379b9cc0"}'></script>
