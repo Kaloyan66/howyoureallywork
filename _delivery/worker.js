@@ -1,21 +1,24 @@
-// Delivery for the book: a Cloudflare Pages Function served at /api/download.
+// Delivery for the book: one Cloudflare Worker, pasted into the Cloudflare dashboard.
+// The website stays on GitHub Pages; thank-you.html calls this Worker from the browser.
 //
-//   GET /api/download?session_id=cs_...
-//       Stripe sends buyers to thank-you.html with this. It asks Stripe whether the
-//       Checkout Session is paid and, if it is, returns the buyer's personal token.
-//       One token per purchase, created the first time and kept in KV.
-//   GET /api/download?t=TOKEN
+//   GET ?session_id=cs_...
+//       Stripe sends buyers to thank-you.html with this. The Worker asks Stripe whether
+//       the Checkout Session is paid and, if it is, returns the buyer's personal token.
+//       One token per purchase, created the first time and kept in KV, so a buyer who
+//       closes the tab can come back with their saved link.
+//   GET ?t=TOKEN
 //       The same answer for a saved link, from KV alone.
-//   GET /api/download?t=TOKEN&f=pdf   (or f=epub)
-//       Redirects to a signed R2 link that expires after LINK_SECONDS. The bucket
-//       itself is private, so the files never have a public URL.
+//   GET ?t=TOKEN&f=pdf   (or f=epub)
+//       Redirects to a signed R2 link that expires after LINK_SECONDS. The bucket itself
+//       is private, so the files never have a public URL.
 //
-// Settings (wrangler.toml for the bindings and plain values, secrets in the dashboard):
-//   PURCHASES             KV namespace: token:<token> -> purchase, session:<id> -> token
-//   STRIPE_SECRET_KEY     secret, a restricted key that can read Checkout Sessions
-//   STRIPE_PAYMENT_LINK   optional plink_... id; when set, only that link's sessions count
-//   R2_ACCOUNT_ID, R2_BUCKET
-//   R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY   secrets, an R2 API token with read access
+// Settings (Worker > Settings > Variables and Secrets / Bindings):
+//   PURCHASES             KV namespace binding: token:<token> -> purchase, session:<id> -> token
+//   STRIPE_SECRET_KEY     secret: a restricted key that can only read Checkout Sessions
+//   STRIPE_PAYMENT_LINK   optional text: plink_... ; when set, only that link's sessions count
+//   R2_ACCOUNT_ID, R2_BUCKET                  text
+//   R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY    secrets: an R2 API token with read-only access
+//   SITE_ORIGIN           optional text: the site allowed to call this, default below
 //
 // To take a purchase's access away (a refund, a chargeback), delete its two KV keys.
 
@@ -25,27 +28,38 @@ const FILES = {
 };
 const LINK_SECONDS = 300;
 
-export async function onRequestGet({ request, env }) {
-  const params = new URL(request.url).searchParams;
-  const session = params.get("session_id");
-  const token = params.get("t");
-  const format = params.get("f");
-  try {
-    if (session) return await fromSession(session, env);
-    if (token && format) return await download(token, format, env);
-    if (token) return await fromToken(token, env);
-    return reply(400, { status: "invalid" });
-  } catch (err) {
-    console.error(err);
-    return reply(500, { status: "error" });
-  }
-}
+const SITE = "https://howyoureallywork.com";
 
-async function fromSession(id, env) {
+export default {
+  async fetch(request, env) {
+    if (request.method !== "GET") return new Response(null, { status: 405 });
+    const url = new URL(request.url);
+    const base = url.origin + url.pathname;
+    const session = url.searchParams.get("session_id");
+    const token = url.searchParams.get("t");
+    const format = url.searchParams.get("f");
+    let res;
+    try {
+      if (session) res = await fromSession(session, env, base);
+      else if (token && format) res = await download(token, format, env);
+      else if (token) res = await fromToken(token, env, base);
+      else res = reply(400, { status: "invalid" });
+    } catch (err) {
+      console.error(err);
+      res = reply(500, { status: "error" });
+    }
+    // The thank-you page reads the JSON answers from another origin.
+    res.headers.set("Access-Control-Allow-Origin", env.SITE_ORIGIN || SITE);
+    res.headers.set("Vary", "Origin");
+    return res;
+  },
+};
+
+async function fromSession(id, env, base) {
   if (!/^cs_(test|live)_[A-Za-z0-9]{10,200}$/.test(id)) return reply(400, { status: "invalid" });
 
   const known = await env.PURCHASES.get(`session:${id}`);
-  if (known) return ready(known);
+  if (known) return ready(known, base);
 
   const res = await fetch(`https://api.stripe.com/v1/checkout/sessions/${id}`, {
     headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
@@ -68,12 +82,12 @@ async function fromSession(id, env) {
   const token = newToken();
   await env.PURCHASES.put(`token:${token}`, JSON.stringify({ session: id, created: new Date().toISOString() }));
   await env.PURCHASES.put(`session:${id}`, token);
-  return ready(token);
+  return ready(token, base);
 }
 
-async function fromToken(token, env) {
+async function fromToken(token, env, base) {
   if (!(await known(token, env))) return reply(404, { status: "invalid" });
-  return ready(token);
+  return ready(token, base);
 }
 
 async function download(token, format, env) {
@@ -98,8 +112,8 @@ async function known(token, env) {
   return /^[A-Za-z0-9_-]{43}$/.test(token) && (await env.PURCHASES.get(`token:${token}`)) !== null;
 }
 
-function ready(token) {
-  const files = Object.keys(FILES).map((f) => ({ format: f, href: `/api/download?t=${token}&f=${f}` }));
+function ready(token, base) {
+  const files = Object.keys(FILES).map((f) => ({ format: f, href: `${base}?t=${token}&f=${f}` }));
   return reply(200, { status: "ready", token, files });
 }
 
@@ -134,7 +148,7 @@ async function hmac(key, data) {
   return crypto.subtle.sign("HMAC", k, encoder.encode(data));
 }
 
-export async function presign({ host, path, region, accessKeyId, secretAccessKey, seconds, params = {}, now = new Date() }) {
+async function presign({ host, path, region, accessKeyId, secretAccessKey, seconds, params = {}, now = new Date() }) {
   const stamp = now.toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
   const day = stamp.slice(0, 8);
   const scope = `${day}/${region}/s3/aws4_request`;
