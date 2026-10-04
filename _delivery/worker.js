@@ -8,6 +8,9 @@
 //       closes the tab can come back with their saved link.
 //   GET ?t=TOKEN
 //       The same answer for a saved link, from KV alone.
+//   GET ?stats
+//       How many live purchases there have been, for the landing page. Test-mode
+//       purchases are never counted.
 //   GET ?t=TOKEN&f=pdf   (or f=epub)
 //       Redirects to a signed R2 link that expires after LINK_SECONDS. The bucket itself
 //       is private, so the files never have a public URL.
@@ -40,7 +43,8 @@ export default {
     const format = url.searchParams.get("f");
     let res;
     try {
-      if (session) res = await fromSession(session, env, base);
+      if (url.searchParams.has("stats")) res = await stats(env);
+      else if (session) res = await fromSession(session, env, base);
       else if (token && format) res = await download(token, format, env);
       else if (token) res = await fromToken(token, env, base);
       else res = reply(400, { status: "invalid" });
@@ -82,7 +86,18 @@ async function fromSession(id, env, base) {
   const token = newToken();
   await env.PURCHASES.put(`token:${token}`, JSON.stringify({ session: id, created: new Date().toISOString() }));
   await env.PURCHASES.put(`session:${id}`, token);
+  if (id.startsWith("cs_live_")) {
+    const readers = Number(await env.PURCHASES.get("stats:readers")) || 0;
+    await env.PURCHASES.put("stats:readers", String(readers + 1));
+  }
   return ready(token, base);
+}
+
+async function stats(env) {
+  const readers = Number(await env.PURCHASES.get("stats:readers")) || 0;
+  const res = reply(200, { readers });
+  res.headers.set("Cache-Control", "public, max-age=300");
+  return res;
 }
 
 async function fromToken(token, env, base) {

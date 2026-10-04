@@ -291,6 +291,11 @@
       }
       .facts b { color: var(--heart); font-weight: 700; }
 
+      .proof { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 14.5px; color: var(--ink-soft); }
+      .proof[hidden] { display: none; }
+      .proof .ico { color: #fff; background: var(--heart); border-radius: 50%; padding: 3px; width: 20px; height: 20px; }
+      .proof b { color: var(--ink); }
+
       /* audiences */
       .aud3 { display: grid; gap: 14px; margin-top: 26px; }
       @media (min-width: 960px) { .aud3 { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
@@ -450,6 +455,10 @@
             <li><b>7</b> parts</li>
             <li>Instant download</li>
           </ul>
+          <p class="proof" hidden>
+            <svg class="ico" aria-hidden="true"><use href="#i-check" /></svg>
+            <span>Already read by <b data-readers></b> readers</span>
+          </p>
         </div>
         <div class="gallery" role="region" aria-roledescription="carousel" aria-label="Photographs of the book">
           <div class="track" id="track" tabindex="0" role="group" aria-label="Photos">
@@ -882,6 +891,18 @@
       const CHECKOUT = "https://buy.stripe.com/bJe00icIybR12S84yf9Zm04";
 
       document.querySelectorAll('[data-role="buy"]').forEach((a) => (a.href = CHECKOUT));
+
+      // Real buyer count, kept by the delivery Worker from live Stripe payments only.
+      // The line stays hidden until there are at least SHOW_READERS_FROM buyers.
+      const SHOW_READERS_FROM = 10;
+      fetch("https://hyrw-delivery.kaloqnv5.workers.dev/?stats")
+        .then((r) => r.json())
+        .then(({ readers }) => {
+          if (!(readers >= SHOW_READERS_FROM)) return;
+          document.querySelector("[data-readers]").textContent = readers.toLocaleString("en-US");
+          document.querySelector(".proof").hidden = false;
+        })
+        .catch(() => {});
 
       // Days left at the launch price, counted to the start of 12 November.
       const days = Math.ceil((new Date(2026, 10, 12) - new Date()) / 864e5);
