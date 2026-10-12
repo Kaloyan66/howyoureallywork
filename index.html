@@ -291,10 +291,6 @@
       }
       .facts b { color: var(--heart); font-weight: 700; }
 
-      .proof { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 14.5px; color: var(--ink-soft); }
-      .proof[hidden] { display: none; }
-      .proof .ico { color: #fff; background: var(--heart); border-radius: 50%; padding: 3px; width: 20px; height: 20px; }
-      .proof b { color: var(--ink); }
 
       /* audiences */
       .aud3 { display: grid; gap: 14px; margin-top: 26px; }
@@ -431,12 +427,12 @@
       <symbol id="i-source" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" /></symbol>
     </svg>
 
-    <div class="bar"><b>$19.99</b> until 12 November, then $34.</div>
+    <div class="bar"><b>$11.99</b> until 12 November, then $19.99.</div>
 
     <header>
       <div class="head">
         <a class="wordmark" href="/">How You Really Work</a>
-        <a class="btn-line" href="#" data-role="buy">Get the book<span class="wide-only">· $19.99</span></a>
+        <a class="btn-line" href="#" data-role="buy">Get the book<span class="wide-only">· $11.99</span></a>
       </div>
     </header>
 
@@ -455,10 +451,7 @@
             <li><b>7</b> parts</li>
             <li>Instant download</li>
           </ul>
-          <p class="proof" hidden>
-            <svg class="ico" aria-hidden="true"><use href="#i-check" /></svg>
-            <span><b data-readers></b> people already own this book</span>
-          </p>
+
         </div>
         <div class="gallery" role="region" aria-roledescription="carousel" aria-label="Photographs of the book">
           <div class="track" id="track" tabindex="0" role="group" aria-label="Photos">
@@ -533,8 +526,8 @@
 
           <div class="deal">
             <div class="price">
-              <b>$19.99</b><s><span class="sr-only">regular price </span>$34</s>
-              <span class="save">Save 41%</span>
+              <b>$11.99</b><s><span class="sr-only">regular price </span>$19.99</s>
+              <span class="save">Save 40%</span>
             </div>
             <p class="until">
               <svg class="ico" aria-hidden="true"><use href="#i-clock" /></svg>
@@ -770,12 +763,12 @@
               <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-tag" /></svg></span>
               <div>
                 <div class="mono">Price</div>
-                <p><b>$19.99 until 12 November, then $34.</b> Paid once.</p>
+                <p><b>$11.99 until 12 November, then $19.99.</b> Paid once.</p>
               </div>
             </li>
           </ul>
           <div class="inline-buy">
-            <a class="cta" href="#" data-role="buy">Get the book for $19.99 <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            <a class="cta" href="#" data-role="buy">Get the book for $11.99 <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
             <p class="note">PDF and EPUB · delivered immediately</p>
           </div>
         </div>
@@ -846,15 +839,15 @@
           <h2>Your body runs your whole life. <i>Learn how to run it.</i></h2>
           <p>Thirty-four chapters, one complete system, yours the moment you pay.</p>
           <div class="price">
-            <b>$19.99</b><s><span class="sr-only">regular price </span>$34</s>
-            <span class="save">Save 41%</span>
+            <b>$11.99</b><s><span class="sr-only">regular price </span>$19.99</s>
+            <span class="save">Save 40%</span>
           </div>
           <a class="cta" href="#" data-role="buy">Get the book <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
           <p class="secure">
             <svg class="ico" aria-hidden="true"><use href="#i-lock" /></svg>
             Secure checkout with Stripe
           </p>
-          <p class="then"><b>$19.99</b> until 12 November, then $34.</p>
+          <p class="then"><b>$11.99</b> until 12 November, then $19.99.</p>
         </div>
       </section>
     </main>
@@ -874,7 +867,7 @@
     </footer>
 
     <div class="stick" id="stick" inert>
-      <div class="t"><b>$19.99</b><s><span class="sr-only">regular price </span>$34</s><em>How Your Body Really Works · PDF and EPUB</em></div>
+      <div class="t"><b>$11.99</b><s><span class="sr-only">regular price </span>$19.99</s><em>How Your Body Really Works · PDF and EPUB</em></div>
       <a class="cta" href="#" data-role="buy">Get the book <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
     </div>
 
@@ -883,21 +876,10 @@
       // CHECKOUT: the Stripe payment link for the book. Every "Get the book"
       // button on the page points here, so changing the link is this one line.
       // ---------------------------------------------------------------------
-      const CHECKOUT = "https://buy.stripe.com/6oU8wO7cCgh5dUid8F63K00";
+      const CHECKOUT = "https://buy.stripe.com/cNi6oGcwW5CrcQe0lT63K01";
 
       document.querySelectorAll('[data-role="buy"]').forEach((a) => (a.href = CHECKOUT));
 
-      // Real buyer count, kept by the delivery Worker from live Stripe payments only.
-      // The line stays hidden until there are at least SHOW_READERS_FROM buyers.
-      const SHOW_READERS_FROM = 10;
-      fetch("https://hyrw-delivery.kaloqnv5.workers.dev/?stats")
-        .then((r) => r.json())
-        .then(({ readers }) => {
-          if (!(readers >= SHOW_READERS_FROM)) return;
-          document.querySelector("[data-readers]").textContent = readers.toLocaleString("en-US");
-          document.querySelector(".proof").hidden = false;
-        })
-        .catch(() => {});
 
       // Days left at the launch price, counted to the start of 12 November.
       const days = Math.ceil((new Date(2026, 10, 12) - new Date()) / 864e5);
