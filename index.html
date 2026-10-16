@@ -12,7 +12,7 @@
       name="description"
       content="The complete guide to how your body really works: living longer, ageing slower and feeling better. PDF and EPUB, instant download."
     />
-    <meta name="theme-color" content="#17140f" />
+    <meta name="theme-color" content="#00274b" />
     <meta property="og:title" content="How Your Body Really Works" />
     <meta
       property="og:description"
@@ -35,18 +35,19 @@
         --paper: #fbf9f5;
         --paper-2: #f4f0e8;
         --white: #ffffff;
-        --ink: #17140f;
-        --ink-2: #24201a;
-        --ink-soft: #57503f;
-        --ink-faint: #8b8474;
-        --rule: #e2dbcc;
-        --signal: #e4f04a;
-        /* the one accent: the deep red of the anatomical heart on the cover */
-        --heart: #9e2b1e;
-        --heart-deep: #7f2117;
-        --heart-soft: #f7e9e3;
-        --on-dark: #f4efe6;
-        --on-dark-soft: #b9b0a0;
+        /* the Linktree palette: deep navy, cream and a steel-blue accent */
+        --navy: #00274b;
+        --navy-2: #0a3560;
+        --ink: #12263a;
+        --ink-soft: #4b5e74;
+        --ink-faint: #627489;
+        --rule: #dfe5ec;
+        --accent: #2e5d8e;
+        --accent-deep: #234a74;
+        --accent-soft: #e5edf6;
+        --accent-light: #9fc0e6;
+        --on-dark: #f4f7fb;
+        --on-dark-soft: #a9bdd3;
         --pad: 22px;
         --measure: 640px;
         --wide: 1120px;
@@ -62,10 +63,8 @@
         font-size: 17.5px;
         line-height: 1.62;
         -webkit-font-smoothing: antialiased;
-        padding-bottom: 88px;
       }
-      @media (min-width: 960px) { body { padding-bottom: 0; } }
-      :focus-visible { outline: 2px solid var(--heart); outline-offset: 3px; }
+      :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
       img { max-width: 100%; }
 
       .wrap { width: 100%; max-width: calc(var(--measure) + 2 * var(--pad)); margin: 0 auto; padding: 0 var(--pad); }
@@ -83,7 +82,7 @@
 
       /* highlighter: brand yellow stays a mark, never a fill for buttons */
       .mark {
-        background: linear-gradient(to top, rgba(228,240,74,.85) 0 42%, transparent 42%);
+        background: linear-gradient(to top, rgba(143, 184, 230, 0.55) 0 42%, transparent 42%);
         padding: 0 2px;
       }
 
@@ -91,16 +90,20 @@
       .cta {
         display: inline-flex; align-items: center; justify-content: center; gap: 10px;
         width: 100%; max-width: 420px;
-        background: var(--heart); color: #fff;
+        background: linear-gradient(180deg, #3b6fa8 0%, var(--accent) 100%); color: #fff;
         border: none; border-radius: 8px; padding: 18px 26px;
         font-family: Archivo, sans-serif; font-size: 18px; font-weight: 700;
         letter-spacing: 0.01em; text-decoration: none; cursor: pointer;
-        box-shadow: 0 10px 24px rgba(158, 43, 30, 0.28), inset 0 -2px 0 rgba(0, 0, 0, 0.18);
+        box-shadow: 0 10px 24px rgba(46, 93, 142, 0.35), inset 0 -2px 0 rgba(0, 0, 0, 0.18);
         transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
       }
-      .cta:hover { background: var(--heart-deep); transform: translateY(-1px); box-shadow: 0 14px 30px rgba(158, 43, 30, 0.34), inset 0 -2px 0 rgba(0, 0, 0, 0.18); }
+      .cta:hover { background: var(--accent-deep); transform: translateY(-1px); box-shadow: 0 14px 30px rgba(46, 93, 142, 0.42), inset 0 -2px 0 rgba(0, 0, 0, 0.18); }
       .cta .ico { width: 20px; height: 20px; transition: transform .12s ease; }
       .cta:hover .ico { transform: translateX(3px); }
+      /* on the navy bands the main button flips to cream so it stays the loudest thing there */
+      .dark .cta { background: var(--paper); color: var(--navy); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), inset 0 -2px 0 rgba(0, 39, 75, 0.12); }
+      .dark .cta:hover { background: #fff; box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45), inset 0 -2px 0 rgba(0, 39, 75, 0.12); }
+      .dark :focus-visible, footer :focus-visible { outline-color: var(--accent-light); }
       .btn-line {
         display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
         color: var(--ink); font-weight: 600; font-size: 14.5px;
@@ -111,12 +114,11 @@
 
       /* ------------------------------------------------------------- chrome */
       .bar {
-        background: var(--ink); color: var(--on-dark-soft);
+        background: var(--navy); color: var(--on-dark-soft);
         text-align: center; padding: 9px 16px;
         font-size: 13px; letter-spacing: 0.01em;
       }
       .bar b { color: #fff; }
-      .bar .mark { color: var(--ink); }
       header {
         border-bottom: 1px solid var(--rule); background: rgba(255, 255, 255, 0.6);
       }
@@ -129,8 +131,8 @@
         font-size: 11.5px; letter-spacing: 0.22em; text-transform: uppercase;
         color: var(--ink); text-decoration: none;
       }
-      .head .btn-line { padding: 7px 12px; font-size: 13.5px; border-color: var(--heart); color: var(--heart); }
-      .head .btn-line:hover { background: var(--heart); color: #fff; }
+      .head .btn-line { padding: 7px 12px; font-size: 13.5px; border-color: var(--accent); color: var(--accent); }
+      .head .btn-line:hover { background: var(--accent); color: #fff; }
       @media (max-width: 400px) { .head .wide-only { display: none; } }
       @media (min-width: 960px) { .head .btn-line { padding: 9px 16px; font-size: 14.5px; } }
 
@@ -152,12 +154,12 @@
         flex: 0 0 86vw; max-width: 520px; aspect-ratio: 4 / 5;
         scroll-snap-align: start; scroll-snap-stop: always;
         border-radius: var(--radius); overflow: hidden; background: var(--paper-2);
-        box-shadow: 0 6px 16px rgba(60, 48, 24, 0.13), 0 1px 3px rgba(60, 48, 24, 0.08);
+        box-shadow: 0 6px 16px rgba(0, 39, 75, 0.14), 0 1px 3px rgba(0, 39, 75, 0.09);
       }
       .slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
       .count {
         position: absolute; top: 16px; left: calc(var(--pad) + 12px);
-        background: rgba(23, 20, 15, 0.72); color: #fff; border-radius: 999px;
+        background: rgba(0, 39, 75, 0.78); color: #fff; border-radius: 999px;
         padding: 3px 10px; font-size: 11px; letter-spacing: 0.1em;
         font-variant-numeric: tabular-nums; pointer-events: none;
       }
@@ -166,12 +168,12 @@
         display: none; place-items: center;
         border: none; border-radius: 50%; cursor: pointer;
         background: rgba(255, 255, 255, 0.94); color: var(--ink);
-        box-shadow: 0 4px 14px rgba(23, 20, 15, 0.18);
+        box-shadow: 0 4px 14px rgba(0, 39, 75, 0.2);
       }
       .gbtn.prev { left: 14px; }
       .gbtn.next { right: 14px; }
       .gbtn svg { width: 18px; height: 18px; }
-      .gbtn:hover { background: #fff; color: var(--heart); }
+      .gbtn:hover { background: #fff; color: var(--accent); }
       .gbtn[aria-disabled="true"] { opacity: .4; cursor: default; }
 
       .thumbs { display: flex; gap: 10px; padding: 0 var(--pad); }
@@ -184,13 +186,13 @@
       }
       .thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
       .thumb:hover { opacity: 1; }
-      .thumb[aria-current="true"] { opacity: 1; border-color: var(--heart); box-shadow: none; }
+      .thumb[aria-current="true"] { opacity: 1; border-color: var(--accent); box-shadow: none; }
 
       /* buy box */
       .buy { display: flex; flex-direction: column; padding: 18px var(--pad) 0; }
       .buy .promise { order: 1; margin: 18px 0 0; }
       .buy .gcap { order: 2; }
-      .eyebrow { display: none; color: var(--heart); margin-bottom: 10px; }
+      .eyebrow { display: none; color: var(--accent); margin-bottom: 10px; }
       h1 {
         font-family: "Instrument Serif", Georgia, serif; font-weight: 400;
         font-size: 36px; line-height: 1.04; letter-spacing: -0.015em;
@@ -199,20 +201,20 @@
       .promise { font-size: 18px; line-height: 1.5; color: var(--ink-soft); margin-bottom: 20px; }
       .deal {
         background: var(--white); border: 1px solid var(--rule); border-radius: var(--radius);
-        padding: 20px; box-shadow: 0 12px 32px rgba(60, 48, 24, 0.08);
+        padding: 20px; box-shadow: 0 12px 32px rgba(0, 39, 75, 0.09);
       }
       .price { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; }
       .price b { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
       .price s { color: var(--ink-faint); font-size: 19px; }
       .save {
-        background: var(--heart-soft); color: var(--heart); border-radius: 999px;
+        background: var(--accent-soft); color: var(--accent); border-radius: 999px;
         font-size: 13px; font-weight: 700; padding: 4px 10px;
       }
       .until {
         display: flex; align-items: center; gap: 8px; margin: 12px 0 16px;
         font-size: 14px; color: var(--ink-soft);
       }
-      .until .ico { color: var(--heart); width: 16px; height: 16px; }
+      .until .ico { color: var(--accent); width: 16px; height: 16px; }
       .until b { color: var(--ink); }
       .deal .cta { max-width: none; }
       .secure {
@@ -223,7 +225,7 @@
       .perks { list-style: none; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--rule); }
       .perks li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: var(--ink-soft); padding: 4px 0; }
       .perks li b { color: var(--ink); font-weight: 600; }
-      .perks .ico { color: var(--heart); margin-top: 3px; }
+      .perks .ico { color: var(--accent); margin-top: 3px; }
       .gcap { margin-top: 14px; font-size: 12.5px; line-height: 1.5; color: var(--ink-faint); }
 
       @media (min-width: 960px) {
@@ -251,16 +253,16 @@
       /* ------------------------------------------------------------ blocks */
       section { padding: 56px 0; }
       section.white { background: rgba(255, 255, 255, 0.78); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-      section.dark { background: var(--ink); color: var(--on-dark); }
+      section.dark { background: var(--navy); color: var(--on-dark); }
       h2 {
         font-family: "Instrument Serif", Georgia, serif; font-weight: 400;
         font-size: 34px; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 16px;
       }
-      h2 i { font-style: italic; color: var(--heart); }
+      h2 i { font-style: italic; color: var(--accent); }
       section p { margin-bottom: 15px; color: var(--ink-soft); }
       section p:last-child { margin-bottom: 0; }
       section p b { color: var(--ink); font-weight: 600; }
-      .kick { margin-bottom: 12px; color: var(--heart); }
+      .kick { margin-bottom: 12px; color: var(--accent); }
       .lead { font-size: 18px; }
       @media (min-width: 960px) {
         section { padding: 84px 0; }
@@ -276,7 +278,7 @@
       }
       .part .num {
         font-family: "Instrument Serif", Georgia, serif; font-size: 28px; line-height: 1;
-        color: var(--heart); text-align: center; padding-top: 2px;
+        color: var(--accent); text-align: center; padding-top: 2px;
       }
       .part h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; }
       .part p { font-size: 15.5px; margin: 0; line-height: 1.5; }
@@ -289,33 +291,33 @@
         font-size: 13px; color: var(--ink-soft); background: var(--white);
         border: 1px solid var(--rule); border-radius: 999px; padding: 4px 11px;
       }
-      .facts b { color: var(--heart); font-weight: 700; }
+      .facts b { color: var(--accent); font-weight: 700; }
 
 
       /* audiences */
       .aud3 { display: grid; gap: 14px; margin-top: 26px; }
       @media (min-width: 960px) { .aud3 { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
-      .aud3 .aud-card .ico { width: 26px; height: 26px; color: var(--heart); margin-bottom: 10px; }
+      .aud3 .aud-card .ico { width: 26px; height: 26px; color: var(--accent); margin-bottom: 10px; }
       .aud3 h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
       .aud3 p { font-size: 15.5px; margin: 0; }
       .more { margin-top: 34px; text-align: center; }
       .more p { color: var(--on-dark); font-size: 18px; margin-bottom: 16px; }
       .more p b { color: #fff; }
       .aud-card { border-radius: var(--radius); padding: 26px 24px; border: 1px solid var(--rule); }
-      .aud-card.yes { background: var(--white); border-top: 4px solid var(--heart); }
+      .aud-card.yes { background: var(--white); border-top: 4px solid var(--accent); }
 
       /* claims, on the dark band */
       .dark h2 { color: #fff; }
-      .dark h2 i { color: var(--signal); }
+      .dark h2 i { color: var(--accent-light); }
       .dark .kick { color: var(--on-dark-soft); }
       .dark p { color: var(--on-dark-soft); }
       .claims { display: grid; gap: 14px; margin-top: 28px; }
       .claim {
-        background: var(--ink-2); border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--navy-2); border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: var(--radius); padding: 24px 22px 26px;
       }
       .claim .ch { color: var(--on-dark-soft); }
-      .claim .ch b { color: var(--ink); background: var(--signal); border-radius: 3px; padding: 1px 6px; margin-right: 6px; font-weight: 500; }
+      .claim .ch b { color: var(--navy); background: var(--accent-light); border-radius: 3px; padding: 1px 6px; margin-right: 6px; font-weight: 500; }
       .claim h3 {
         font-family: "Instrument Serif", Georgia, serif; font-weight: 400; color: #fff;
         font-size: 27px; line-height: 1.15; margin: 14px 0 10px;
@@ -339,7 +341,7 @@
       }
       .spec .badge {
         flex: none; width: 40px; height: 40px; border-radius: 50%;
-        display: grid; place-items: center; background: var(--heart-soft); color: var(--heart);
+        display: grid; place-items: center; background: var(--accent-soft); color: var(--accent);
       }
       .spec .mono { margin-bottom: 4px; }
       .spec p { font-size: 15.5px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
@@ -360,7 +362,7 @@
       summary::-webkit-details-marker { display: none; }
       summary::after {
         content: "+"; flex: none; width: 26px; height: 26px; border-radius: 50%;
-        display: grid; place-items: center; background: var(--heart-soft); color: var(--heart);
+        display: grid; place-items: center; background: var(--accent-soft); color: var(--accent);
         font-size: 18px; font-weight: 500; line-height: 1;
       }
       details[open] summary::after { content: "\2212"; }
@@ -383,17 +385,19 @@
       .close .then b { color: #fff; }
 
       footer {
-        background: var(--paper-2); border-top: 1px solid var(--rule);
-        padding: 30px 0 44px; color: var(--ink-faint); font-size: 13px; line-height: 1.6;
+        background: var(--navy); border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 34px 0 calc(48px + 88px); color: var(--on-dark-soft); font-size: 13px; line-height: 1.6;
       }
+      @media (min-width: 960px) { footer { padding-bottom: 48px; } }
       footer p { margin-bottom: 11px; }
-      footer a { color: var(--ink-soft); }
+      footer b { color: var(--on-dark); }
+      footer a { color: var(--on-dark); }
 
       /* sticky */
       .stick {
         position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
         background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(10px);
-        border-top: 1px solid var(--rule); box-shadow: 0 -8px 24px rgba(23, 20, 15, 0.08);
+        border-top: 1px solid var(--rule); box-shadow: 0 -8px 24px rgba(0, 39, 75, 0.1);
         padding: 10px var(--pad) calc(10px + env(safe-area-inset-bottom));
         display: flex; align-items: center; gap: 14px;
         transform: translateY(110%); transition: transform .22s ease;
@@ -854,7 +858,7 @@
 
     <footer>
       <div class="wrap">
-        <p><b style="color: var(--ink-soft)">How You Really Work</b>, the body, explained
+        <p><b>How You Really Work</b>, the body, explained
         properly. New videos daily.</p>
         <p>
           This book is educational. It is not medical advice, it does not diagnose or treat any
