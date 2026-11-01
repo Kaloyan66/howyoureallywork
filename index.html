@@ -210,12 +210,35 @@
         background: var(--accent-soft); color: var(--accent); border-radius: 999px;
         font-size: 13px; font-weight: 700; padding: 4px 10px;
       }
-      .until {
-        display: flex; align-items: center; gap: 8px; margin: 12px 0 16px;
-        font-size: 14px; color: var(--ink-soft);
+      /* launch price: what shows before the deadline (.when-promo) and after it (.when-full) */
+      .when-full { display: none; }
+      .promo-over .when-promo { display: none !important; }
+      .promo-over .when-full { display: inline; }
+
+      /* countdown */
+      .countdown { margin: 14px 0 16px; }
+      .cd-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 14px; color: var(--ink-soft); }
+      .cd-head .ico { flex: none; color: var(--accent); width: 16px; height: 16px; }
+      .cd-head b { color: var(--ink); }
+      .cd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .cd-grid div { background: var(--accent-soft); border-radius: 8px; padding: 11px 6px 9px; text-align: center; }
+      .cd-grid b {
+        display: block; font-size: 30px; line-height: 1; font-weight: 700; letter-spacing: -0.02em;
+        color: var(--navy); font-variant-numeric: tabular-nums;
       }
-      .until .ico { color: var(--accent); width: 16px; height: 16px; }
-      .until b { color: var(--ink); }
+      .cd-grid span {
+        display: block; margin-top: 7px; color: var(--ink-soft);
+        font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 500;
+        font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      }
+      .close .countdown { max-width: 360px; margin: 4px auto 22px; }
+      .close .cd-head { justify-content: center; color: var(--on-dark-soft); }
+      .close .cd-head b { color: #fff; }
+      .close .cd-head .ico { color: var(--accent-light); }
+      .close .cd-grid div { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.14); }
+      .close .cd-grid b { color: #fff; }
+      .close .cd-grid span { color: var(--on-dark-soft); }
+      .bar span[data-cd-compact] { color: #fff; font-weight: 600; font-variant-numeric: tabular-nums; }
       .deal .cta { max-width: none; }
       .secure {
         display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -381,8 +404,6 @@
       .close .price s { color: var(--on-dark-soft); }
       .close .save { background: rgba(255, 255, 255, 0.1); color: #fff; }
       .close .secure { color: var(--on-dark-soft); margin: 14px auto 4px; }
-      .close .then { font-size: 14px; margin: 0 auto; }
-      .close .then b { color: #fff; }
 
       footer {
         background: var(--navy); border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -414,6 +435,22 @@
       .stick .cta .ico { width: 16px; height: 16px; }
       @media (min-width: 960px) { .stick { display: none; } }
     </style>
+    <script>
+      // ---------------------------------------------------------------------
+      // PRICING: the one place to edit when the launch price changes.
+      //   LAUNCH_END        the last moment of the launch price: the end of 14 November, Sofia time
+      //   CHECKOUT_LAUNCH   the Stripe Payment Link for the launch price ($11.99)
+      //   CHECKOUT_REGULAR  the Stripe Payment Link for the regular price ($19.99)
+      // Until LAUNCH_END the page shows the launch price and every "Get the book" button
+      // uses CHECKOUT_LAUNCH. From then on it shows the regular price and uses
+      // CHECKOUT_REGULAR. The prices and the date written in the page text are plain text.
+      // ---------------------------------------------------------------------
+      const LAUNCH_END = new Date("2026-11-14T23:59:59+02:00");
+      const CHECKOUT_LAUNCH = "https://buy.stripe.com/cNi6oGcwW5CrcQe0lT63K01";
+      const CHECKOUT_REGULAR = "https://buy.stripe.com/6oU8wO7cCgh5dUid8F63K00";
+
+      if (Date.now() >= LAUNCH_END) document.documentElement.classList.add("promo-over");
+    </script>
   </head>
   <body>
     <svg width="0" height="0" style="position: absolute" aria-hidden="true">
@@ -431,12 +468,12 @@
       <symbol id="i-source" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" /></symbol>
     </svg>
 
-    <div class="bar"><b>$11.99</b> until 12 November, then $19.99.</div>
+    <div class="bar when-promo">Launch price <b>$11.99</b> · <span data-cd-compact>until 14 November</span> · then $19.99</div>
 
     <header>
       <div class="head">
         <a class="wordmark" href="/">How You Really Work</a>
-        <a class="btn-line" href="#" data-role="buy">Get the book<span class="wide-only">· $11.99</span></a>
+        <a class="btn-line" href="#" data-role="buy">Get the book<span class="wide-only">· <span class="when-promo">$11.99</span><span class="when-full">$19.99</span></span></a>
       </div>
     </header>
 
@@ -530,13 +567,19 @@
 
           <div class="deal">
             <div class="price">
-              <b>$11.99</b><s><span class="sr-only">regular price </span>$19.99</s>
-              <span class="save">Save 40%</span>
+              <b><span class="when-promo">$11.99</span><span class="when-full">$19.99</span></b>
+              <s class="when-promo"><span class="sr-only">regular price </span>$19.99</s>
+              <span class="save when-promo">Save 40%</span>
             </div>
-            <p class="until">
-              <svg class="ico" aria-hidden="true"><use href="#i-clock" /></svg>
-              <span><b>Launch price</b> until 12 November<span data-days></span></span>
-            </p>
+            <div class="countdown when-promo" role="timer" data-cd aria-label="Time left at the launch price, which ends on 14 November">
+              <div class="cd-head"><svg class="ico" aria-hidden="true"><use href="#i-clock" /></svg>
+                <span data-cd-normal><b>Launch price ends</b> 14 November</span><span data-cd-last hidden><b>Last day</b> at the launch price</span></div>
+              <div class="cd-grid">
+                <div><b data-d>--</b><span>days</span></div>
+                <div><b data-h>--</b><span>hours</span></div>
+                <div><b data-m>--</b><span>minutes</span></div>
+              </div>
+            </div>
             <a class="cta" href="#" data-role="buy">Get the book <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
             <p class="secure">
               <svg class="ico" aria-hidden="true"><use href="#i-lock" /></svg>
@@ -767,12 +810,12 @@
               <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-tag" /></svg></span>
               <div>
                 <div class="mono">Price</div>
-                <p><b>$11.99 until 12 November, then $19.99.</b> Paid once.</p>
+                <p><span class="when-promo"><b>$11.99 until 14 November, then $19.99.</b></span><span class="when-full"><b>$19.99.</b></span> Paid once.</p>
               </div>
             </li>
           </ul>
           <div class="inline-buy">
-            <a class="cta" href="#" data-role="buy">Get the book for $11.99 <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            <a class="cta" href="#" data-role="buy">Get the book for <span class="when-promo">$11.99</span><span class="when-full">$19.99</span> <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
             <p class="note">PDF and EPUB · delivered immediately</p>
           </div>
         </div>
@@ -813,8 +856,8 @@
             <details>
               <summary>When do I get it?</summary>
               <p>
-                The moment you pay, both files at once. It is not a pre-order: 12 November is only
-                the day the price goes up.
+                The moment you pay, both files at once. It is not a pre-order<span class="when-promo">: 14
+                November is only the day the price goes up</span>.
               </p>
             </details>
             <details>
@@ -843,15 +886,24 @@
           <h2>Your body runs your whole life. <i>Learn how to run it.</i></h2>
           <p>Thirty-four chapters, one complete system, yours the moment you pay.</p>
           <div class="price">
-            <b>$11.99</b><s><span class="sr-only">regular price </span>$19.99</s>
-            <span class="save">Save 40%</span>
+            <b><span class="when-promo">$11.99</span><span class="when-full">$19.99</span></b>
+            <s class="when-promo"><span class="sr-only">regular price </span>$19.99</s>
+            <span class="save when-promo">Save 40%</span>
+          </div>
+          <div class="countdown when-promo" role="timer" data-cd aria-label="Time left at the launch price, which ends on 14 November">
+            <div class="cd-head"><svg class="ico" aria-hidden="true"><use href="#i-clock" /></svg>
+              <span data-cd-normal><b>Launch price ends</b> 14 November</span><span data-cd-last hidden><b>Last day</b> at the launch price</span></div>
+            <div class="cd-grid">
+              <div><b data-d>--</b><span>days</span></div>
+              <div><b data-h>--</b><span>hours</span></div>
+              <div><b data-m>--</b><span>minutes</span></div>
+            </div>
           </div>
           <a class="cta" href="#" data-role="buy">Get the book <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
           <p class="secure">
             <svg class="ico" aria-hidden="true"><use href="#i-lock" /></svg>
             Secure checkout with Stripe
           </p>
-          <p class="then"><b>$11.99</b> until 12 November, then $19.99.</p>
         </div>
       </section>
     </main>
@@ -871,24 +923,47 @@
     </footer>
 
     <div class="stick" id="stick" inert>
-      <div class="t"><b>$11.99</b><s><span class="sr-only">regular price </span>$19.99</s><em>How Your Body Really Works · PDF and EPUB</em></div>
+      <div class="t"><b><span class="when-promo">$11.99</span><span class="when-full">$19.99</span></b><s class="when-promo"><span class="sr-only">regular price </span>$19.99</s><em>How Your Body Really Works · PDF and EPUB</em></div>
       <a class="cta" href="#" data-role="buy">Get the book <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
     </div>
 
     <script>
-      // ---------------------------------------------------------------------
-      // CHECKOUT: the Stripe payment link for the book. Every "Get the book"
-      // button on the page points here, so changing the link is this one line.
-      // ---------------------------------------------------------------------
-      const CHECKOUT = "https://buy.stripe.com/cNi6oGcwW5CrcQe0lT63K01";
+      // Every "Get the book" button points at the launch link until LAUNCH_END, then at the
+      // regular link (both are set at the top of the page, in the PRICING block).
+      function setLinks() {
+        const href = Date.now() >= LAUNCH_END ? CHECKOUT_REGULAR : CHECKOUT_LAUNCH;
+        document.querySelectorAll('[data-role="buy"]').forEach((a) => (a.href = href));
+      }
+      setLinks();
 
-      document.querySelectorAll('[data-role="buy"]').forEach((a) => (a.href = CHECKOUT));
-
-
-      // Days left at the launch price, counted to the start of 12 November.
-      const days = Math.ceil((new Date(2026, 10, 12) - new Date()) / 864e5);
-      if (days > 1) document.querySelector("[data-days]").textContent = ` · ${days} days left`;
-      else if (days === 1) document.querySelector("[data-days]").textContent = " · last day";
+      // Countdown to the end of the launch price: days, hours and minutes. When it reaches
+      // zero the page switches itself to the regular price.
+      const pad = (n) => String(n).padStart(2, "0");
+      const clocks = [...document.querySelectorAll("[data-cd]")];
+      const compact = [...document.querySelectorAll("[data-cd-compact]")];
+      let timer;
+      function tick() {
+        const left = LAUNCH_END - Date.now();
+        if (left <= 0) {
+          document.documentElement.classList.add("promo-over");
+          setLinks();
+          clearInterval(timer);
+          return;
+        }
+        const d = Math.floor(left / 864e5);
+        const h = Math.floor((left % 864e5) / 36e5);
+        const m = Math.floor((left % 36e5) / 6e4);
+        for (const c of clocks) {
+          c.querySelector("[data-d]").textContent = pad(d);
+          c.querySelector("[data-h]").textContent = pad(h);
+          c.querySelector("[data-m]").textContent = pad(m);
+          c.querySelector("[data-cd-normal]").hidden = d === 0;
+          c.querySelector("[data-cd-last]").hidden = d !== 0;
+        }
+        for (const c of compact) c.textContent = "ends in " + (d ? d + "d " : "") + pad(h) + "h " + pad(m) + "m";
+      }
+      tick();
+      timer = setInterval(tick, 1000);
 
       // The sticky bar appears once the main "Get the book" has scrolled off the
       // top, and steps aside while the closing one is on screen. The main button is
